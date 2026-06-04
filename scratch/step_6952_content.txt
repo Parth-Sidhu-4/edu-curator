@@ -1,0 +1,95 @@
+Created At: 2026-06-03T10:21:06Z
+Completed At: 2026-06-03T10:21:06Z
+File Path: `file:///d:/Internship/dashboard/app.js`
+Total Lines: 2272
+Total Bytes: 84148
+Showing lines 930 to 1095
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+930:       const factRows = factsData.map(f => {
+931:         let valStr = '';
+932:         if (f.field_value != null) {
+933:           if (typeof f.field_value === 'object') {
+934:             if (Array.isArray(f.field_value)) {
+935:               valStr = f.field_value.join(', ');
+936:             } else if (f.field_value.value !== undefined) {
+937:               valStr = f.field_value.value;
+938:             } else {
+939:               valStr = JSON.stringify(f.field_value);
+940:             }
+941:           } else {
+942:             valStr = String(f.field_value);
+943:           }
+944:         }
+945:         const conf = f.extraction_confidence != null ? f.extraction_confidence.toFixed(2) : '—';
+946:         return `
+947:           <tr>
+948:             <td><strong>${esc(f.field_name)}</strong></td>
+949:             <td>${esc(valStr)}</td>
+950:             <td><span class="pill pill-accent">${esc(conf)}</span></td>
+951:             <td><span class="text-sm text-muted">${esc(f.source_id || '—')}</span></td>
+952:           </tr>
+953:         `;
+954:       }).join('');
+955: 
+956:       factsHtml = `
+957:         <div class="collapsible-section mt-24" id="facts-collapsible">
+958:           <button class="collapsible-header" id="facts-toggle" aria-expanded="false" aria-controls="facts-body">
+959:             <span class="collapsible-title">
+960:               <i class="ph-light ph-list-bullets"></i>
+961:               Extracted Facts
+962:               <span class="pill pill-neutral" style="font-size:0.7rem;padding:2px 8px;margin-left:6px;">${factsData.length}</
+<truncated 3608 bytes>
+geReviewSignals(knowledgeRecord) + `
+1044:         <div class="empty-state mt-24">
+1045:           <p>No content generated for this topic yet.</p>
+1046:         </div>
+1047:       </select>
+1048:     </div>
+1049: 
+1050:     ${jobHtml}
+1051:     ${contentHtml}
+1052:   `;
+1053: 
+1054:   // Bind events
+1055:   const sel = $('#content-topic-select');
+1056:   sel.addEventListener('change', () => {
+1057:     state.selectedTopicId = sel.value || null;
+1058:     renderContent();
+1059:   });
+1060: 
+1061:   const genBtn = $('#btn-generate');
+1062:   if (genBtn) {
+1063:     genBtn.addEventListener('click', async () => {
+1064:       if (!state.selectedTopicId) return;
+1065:       genBtn.disabled = true;
+1066:       genBtn.textContent = 'Queuing...';
+1067:       await insertJob(state.selectedTopicId);
+1068:       renderContent();
+1069:     });
+1070:   }
+1071: 
+1072:   const resetBtn = $('#btn-force-reset');
+1073:   if (resetBtn) {
+1074:     resetBtn.addEventListener('click', async () => {
+1075:       const jobId = resetBtn.dataset.jobId;
+1076:       resetBtn.disabled = true;
+1077:       resetBtn.textContent = 'Resetting...';
+1078:       try {
+1079:         await resetJob('curation_jobs', jobId);
+1080:         toast('Job reset successfully', 'success');
+1081:       } catch (error) {
+1082:         toast(`Reset failed: ${error.message}`, 'error');
+1083:       }
+1084:       renderContent();
+1085:     });
+1086:   }
+1087: 
+1088:   // Wire up collapsible facts toggle
+1089:   const factsToggle = $('#facts-toggle');
+1090:   if (factsToggle) {
+1091:     factsToggle.addEventListener('click', () => {
+1092:       const body = $('#facts-body');
+1093:       const isOpen = factsToggle.getAttribute('aria-expanded') === 'true';
+1094:       factsToggle.setAttribute('aria-expanded', String(!isOpen));
+1095:       if (isOpen) {
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

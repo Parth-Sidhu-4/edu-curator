@@ -1,0 +1,31 @@
+Region us-east-1: connection to server at "aws-0-us-east-1.pooler.supabase.com" (44.208.221.186), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region us-east-2: connection to server at "aws-0-us-east-2.pooler.supabase.com" (3.139.14.59), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region us-west-1: connection to server at "aws-0-us-west-1.pooler.supabase.com" (52.8.172.168), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region us-west-2: connection to server at "aws-0-us-west-2.pooler.supabase.com" (35.160.209.8), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region ap-southeast-1: connection to server at "aws-0-ap-southeast-1.pooler.supabase.com" (52.74.252.201), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region ap-southeast-2: connection to server at "aws-0-ap-southeast-2.pooler.supabase.com" (13.238.183.126), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region ap-south-1: connection to server at "aws-0-ap-south-1.pooler.supabase.com" (3.108.251.216), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region ap-northeast-1: connection to server at "aws-0-ap-northeast-1.pooler.supabase.com" (52.68.3.1), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region ap-northeast-2: connection to server at "aws-0-ap-northeast-2.pooler.supabase.com" (15.165.245.138), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region eu-west-1: connection to server at "aws-0-eu-west-1.pooler.supabase.com" (34.241.16.247), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region eu-west-2: connection to server at "aws-0-eu-west-2.pooler.supabase.com" (18.169.28.97), port 6543 failed: FATAL:  Tenant or user not found
+
+Region eu-west-3: connection to server at "aws-0-eu-west-3.pooler.supabase.com" (13.39.9.193), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region eu-central-1: connection to server at "aws-0-eu-central-1.pooler.supabase.com" (18.198.145.223), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region eu-north-1: connection to server at "aws-0-eu-north-1.pooler.supabase.com" (13.60.109.208), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region ca-central-1: connection to server at "aws-0-ca-central-1.pooler.supabase.com" (15.156.180.136), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found
+
+Region sa-east-1: connection to server at "aws-0-sa-east-1.pooler.supabase.com" (54.94.90.106), port 6543 failed: FATAL:  (ENOTFOUND) tenant/user postgres.qofphbmnxoorgbhtmmni not found

@@ -1,0 +1,96 @@
+Created At: 2026-06-03T10:21:15Z
+Completed At: 2026-06-03T10:21:15Z
+File Path: `file:///d:/Internship/dashboard/app.js`
+Total Lines: 2272
+Total Bytes: 84148
+Showing lines 920 to 1060
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+920:         state._jobPollTimer = null;
+921:       }
+922:     }
+923: 
+924:     const knowledgeRecord = await fetchLatestKnowledge(selectedId);
+925: 
+926:     // Fetch facts for this topic
+927:     let factsHtml = '';
+928:     const { data: factsData } = await db.from('fact_extractions').select('*').eq('topic_id', selectedId);
+929:     if (factsData && factsData.length > 0) {
+930:       const factRows = factsData.map(f => {
+931:         let valStr = '';
+932:         if (f.field_value != null) {
+933:           if (typeof f.field_value === 'object') {
+934:             if (Array.isArray(f.field_value)) {
+935:               valStr = f.field_value.join(', ');
+936:             } else if (f.field_value.value !== undefined) {
+937:               valStr = f.field_value.value;
+938:             } else {
+939:               valStr = JSON.stringify(f.field_value);
+940:             }
+941:           } else {
+942:             valStr = String(f.field_value);
+943:           }
+944:         }
+945:         const conf = f.extraction_confidence != null ? f.extraction_confidence.toFixed(2) : '—';
+946:         return `
+947:           <tr>
+948:             <td><strong>${esc(f.field_name)}</strong></td>
+949:             <td>${esc(valStr)}</td>
+950:             <td><span class="pill pill-accent">${esc(conf)}</span></td>
+951:             <td><span class="text-sm text-muted">${esc(f.source_id || '—')}</span></td>
+952:           </tr>
+953:         `;
+954:       }).join('');
+955: 
+956:       factsHtml = `
+957:         <div class="collapsible-section mt-24" id="facts-collapsible">
+958:        
+<truncated 2640 bytes>
+ible-title">
+1014:               <i class="ph-light ph-list-bullets"></i>
+1015:               Extracted Facts
+1016:               <span class="pill pill-neutral" style="font-size:0.7rem;padding:2px 8px;margin-left:6px;">${factsData.length}</span>
+1017:             </span>
+1018:             <i class="ph-light ph-caret-down collapsible-chevron"></i>
+1019:           </button>
+1020:           <div class="collapsible-body" id="facts-body" hidden>
+1021:             <div class="table-wrap mb-8">
+1022:               <table>
+1023:                 <thead>
+1024:                   <tr>
+1025:                     <th>Field Name</th>
+1026:                     <th>Value</th>
+1027:                     <th>Confidence</th>
+1028:                     <th>Source ID</th>
+1029:                   </tr>
+1030:                 </thead>
+1031:                 <tbody>${factRows}</tbody>
+1032:               </table>
+1033:             </div>
+1034:           </div>
+1035:         </div>
+1036:       `;
+1037:     }
+1038: 
+1039:     if (content) {
+1040:       const cur = typeof content.content_json === 'string' ? JSON.parse(content.content_json) : (content.content_json || {});
+1041:       contentHtml = factsHtml + renderKnowledgeReviewSignals(knowledgeRecord) + renderCurriculum(content, cur, topic);
+1042:     } else {
+1043:       contentHtml = factsHtml + renderKnowledgeReviewSignals(knowledgeRecord) + `
+1044:         <div class="empty-state mt-24">
+1045:           <p>No content generated for this topic yet.</p>
+1046:         </div>
+1047:       </select>
+1048:     </div>
+1049: 
+1050:     ${jobHtml}
+1051:     ${contentHtml}
+1052:   `;
+1053: 
+1054:   // Bind events
+1055:   const sel = $('#content-topic-select');
+1056:   sel.addEventListener('change', () => {
+1057:     state.selectedTopicId = sel.value || null;
+1058:     renderContent();
+1059:   });
+1060: 
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

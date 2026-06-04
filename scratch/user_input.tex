@@ -1,0 +1,105 @@
+<USER_REQUEST>
+man you just need to update the following LaTEx repor to reflect the changes, since many things have chnaged since then
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+\usepackage{mathptmx}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    pdftitle={Edu-Curator Technical Internship Report},
+}
+
+\titleformat{\section}{\normalsize\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
+
+\lstset{
+    basicstyle=\small\ttfamily,
+    breaklines=true,
+    frame=single,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    keepspaces=true,
+    columns=flexible
+}
+
+\begin{document}
+
+%% ============================================================
+%% TITLE PAGE
+%% ============================================================
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\large \textbf{A TECHNICAL INTERNSHIP REPORT}} \\[0.8cm]
+{\Large \textbf{EDU-CURATOR: AN AUTOMATED RETRIEVAL-AUGMENTED GENERATION PIPELINE FOR EDUCATIONAL CURRICULUM SYNTHESIS}} \\[1.5cm]
+\textit{Submitted in partial fulfillment of the requirements for the degree of}\\[0.3cm]
+\textbf{Bachelor of Technology in Computer Science \& Engineering}\\[2cm]
+\textit{Prepared by:}\\[0.2cm]
+\textbf{Engineering Intern}\\[3cm]
+\textbf{Department of Computer Science and Engineering}\\
+\textbf{College of Engineering and Technology}\\[1cm]
+\today
+\end{titlepage}
+
+\newpage
+\pagenumbering{roman}
+
+%% ============================================================
+%% ABSTRACT
+%% ============================================================
+\begin{abstract}
+This report provides a comprehensive, first-principles account of the engineering design, da
+<truncated 45215 bytes>
+ot PASS), the verification score is 0. If PASS, 20 points are deducted per flag raised:
+
+\begin{equation}
+H_{\text{ver}} = \begin{cases} 0.0 & \text{if verdict} = \text{FLAG} \\ \max(0,\ 100 - 20 \times |\text{flags}|) & \text{if verdict} = \text{PASS} \end{cases}
+\end{equation}
+
+This is implemented directly in \texttt{calculate\_hybrid\_confidence()}:
+
+\begin{lstlisting}[language=Python]
+auth_score = sum((s.trust_score or 5)*10 for s in sources) / len(sources)
+conflict_ratio = conflict_count / total_scalar_fields
+consensus_score = max(0.0, 100.0 - (conflict_ratio * 100.0))
+ver_score = max(0.0, 100.0 - (flags_count * 20.0)) if passed else 0.0
+final_score = 0.40*auth_score + 0.40*consensus_score + 0.20*ver_score
+\end{lstlisting}
+
+\subsection{Deterministic SHA-256 Pipeline Skip Logic}
+
+Running the full six-stage pipeline is expensive in API tokens. The system implements a deterministic skip mechanism: before running any stage, a SHA-256 hash of all pipeline inputs is computed and compared against the hash stored from the previous run. If they match, the pipeline is skipped entirely with ``up-to-date'' status:
+
+\begin{lstlisting}[language=Python]
+hash_payload = (
+    f"topic_name:{topic.topic_name}|"
+    f"topic_type:{topic.topic_type}|"
+    f"sources_hashes:{sources_hashes}|"   # SHA-256 of each source's content
+    f"ext_model:{settings.extraction_model}|"
+    f"gen_model:{settings.generation_model}|"
+    f"ext_sys_prompt:{ext_system_prompt}|"
+    f"gen_sys_prompt:{gen_system_prompt}"
+)
+return hashlib.sha256(hash_payload.encode("utf-8")).hexdigest()
+\end{lstlisting}
+
+The hash includes the topic metadata, the content hash of every mapped source document, the model names, and the exact text of the system prompts. Any change to any input (a new source document, a model upgrade, a prompt tweak) produces a different hash and triggers re-generation, while unchange
+<truncated 17587 bytes>
+
+NOTE: The output was truncated because it was too long. Use a more targeted query or a smaller range to get the information you need.

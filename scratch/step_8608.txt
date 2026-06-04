@@ -1,0 +1,77 @@
+<USER_REQUEST>
+# 🔐 Edu-Curator Security Audit Report
+
+**Date:** 2026-06-03 | **Auditor:** Antigravity (Senior AppSec + Pentest Role)  
+**Scope:** Zero-trust, internet-facing review of entire codebase
+
+---
+
+## Executive Summary
+
+The codebase has received meaningful security hardening (auth gating, SSRF prevention, path traversal fixes, rate limiting). However, **several Critical and High severity issues remain** — most notably an **SSRF bypass in async ingestion**, **frontend that bypasses all backend security controls via direct Supabase calls**, and a **CSP that is functionally useless** due to `unsafe-inline` + `unsafe-eval`. The application is **not production-ready** without fixing the Critical items.
+
+**Production Readiness Score: 52 / 100**
+
+---
+
+## Security Findings Table
+
+| # | Severity | Category | Title | File |
+|---|----------|----------|-------|------|
+| F-01 | 🔴 Critical | SSRF | Async ingestion bypasses SSRF check entirely | `ingest.py:552` |
+| F-02 | 🔴 Critical | Auth Bypass | Frontend queries Supabase directly, bypassing all backend auth/rate-limit | `app.js:427-515` |
+| F-03 | 🔴 Critical | XSS / CSP | CSP includes `unsafe-inline` + `unsafe-eval`, fully nullifying it | `serve.py:815` |
+| F-04 | 🔴 Critical | Injection | Arbitrary fields accepted in topic/source insert — no field allowlist | `serve.py:512,548` |
+| F-05 | 🟠 High | Prompt Injection | Source content injected raw into LLM trust-eval prompt | `ingest.py:427` |
+| F-06 | 🟠 High | Data Exposure | All LLM system prompts/responses readable by any authenticated user | `app.js:497` |
+| F-07 | 🟠 High | Infra | Dockerfile CMD points to wrong entry point (`app.py` vs `serve.py`) | `Dockerfile:56` |
+| F-08 | 🟠 High | Env Leak | `os.environ.copy()` passes ALL secrets to every subprocess | `serve.py:145,240` |
+| F-09 | 🟠 High | No HTTPS | No TLS anywhere; tokens transmitted in plaintext HTTP | `serve.py:846` |
+| F-10 | 🟠 High | SSRF (secondary) | DNS rebinding window between validation and HTTP fetch | `ingest.py:
+<truncated 19213 bytes>
+ection to close SSRF DNS rebinding window
+- [ ] **LOW** — Add `--require-hashes` to pip installs
+- [ ] **LOW** — Add magic-byte (MIME sniffing) validation to upload handler
+
+---
+
+## Top 10 Fixes to Implement Immediately
+
+| Priority | Fix | Effort |
+|----------|-----|--------|
+| 1 | Add `_validate_url_ssrf()` to `async_fetch_url_text()` | 1 line |
+| 2 | Fix Dockerfile CMD → `python dashboard/serve.py` | 1 line |
+| 3 | Add field allowlists to `/api/topic` and `/api/source` | ~15 lines |
+| 4 | Remove `unsafe-inline`/`unsafe-eval` from CSP, add nonce | ~20 lines |
+| 5 | Add RLS policy on `llm_traces`: `USING (auth.uid() IS NOT NULL AND is_admin(auth.uid()))` | 1 SQL line |
+| 6 | Narrow subprocess environment to only required keys | ~10 lines |
+| 7 | Wrap source content in `<content>` delimiters in trust eval prompt | ~3 lines |
+| 8 | Replace `error.message` in frontend toasts with generic messages | ~10 lines |
+| 9 | Replace `str(exc)` in `error_message` DB column with generic string | ~5 lines |
+| 10 | Deploy behind Nginx/Caddy with TLS before any non-localhost exposure | Infrastructure |
+
+---
+
+**Final Score Breakdown:**
+
+| Domain | Score |
+|--------|-------|
+| Authentication & Authorization | 65/100 |
+| Input Validation | 55/100 |
+| API Security | 45/100 |
+| Data Protection | 40/100 |
+| Frontend Security | 60/100 |
+| Backend Security | 50/100 |
+| Infrastructure | 40/100 |
+| **Overall** | **52/100** |
+
+The highest-ROI item is **F-01** (one line of code, closes a complete SSRF bypass) and **F-07** (your Docker image currently starts the wrong server). Fix those two first.
+
+LET'S FIX IT ALL
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-03T20:44:33+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Claude Sonnet 4.6 (Thinking) to Gemini 3.5 Flash (High). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

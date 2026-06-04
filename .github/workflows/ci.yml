@@ -1,0 +1,91 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master", "dev"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  test:
+    name: Run Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      # ── Checkout ──────────────────────────────────────────────────
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ── Python Setup ──────────────────────────────────────────────
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      # ── Install CPU-only PyTorch first (avoids 4GB GPU download) ──
+      - name: Install CPU-only PyTorch
+        run: pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      # ── Install project dependencies ──────────────────────────────
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── Lint (non-blocking — warns but doesn't fail the build) ────
+      - name: Lint with ruff
+        run: |
+          pip install ruff
+          ruff check src/ dashboard/ --output-format=github || true
+
+      # ── Run tests ─────────────────────────────────────────────────
+      - name: Run pytest
+        env:
+          # Minimal fake credentials so modules can import without crashing
+          SUPABASE_URL: "https://fake.supabase.co"
+          SUPABASE_KEY: "fake-service-key"
+          SUPABASE_ANON_KEY: "fake-anon-key"
+          CEREBRAS_API_KEY: "fake-cerebras-key"
+          GROQ_API_KEY: "fake-groq-key"
+          LLM_PROVIDER: "cerebras"
+          EXTRACTION_MODEL: "test-model"
+          GENERATION_MODEL: "test-model"
+          ALLOWED_EMAILS: "test_reviewer@example.com"
+          START_IN_PROCESS_WORKER: "false"
+          LITELLM_FALLBACK_ENABLED: "false"
+          LLM_CACHE_ENABLED: "false"
+        run: |
+          python -m pytest tests/ -v --tb=short --no-header
+
+      # ── Upload test results on failure ────────────────────────────
+      - name: Upload pytest output on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-output
+          path: |
+            .pytest_cache/
+          retention-days: 7
+
+  # ── Docker build validation (ensures the image builds cleanly) ───
+  docker-build:
+    name: Validate Docker Build
+    runs-on: ubuntu-latest
+    # Only run on push to main, not every PR (it's slow)
+    if: github.event_name == 'push'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build --target runner -t edu-curator:ci-test .
+
+      - name: Verify image has health check target
+        run: |
+          docker run --rm --entrypoint python edu-curator:ci-test \
+            -c "import dashboard.serve; print('Server module imports OK')"

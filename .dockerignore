@@ -1,0 +1,21 @@
+__pycache__
+*.pyc
+.env
+.git
+.venv
+data/
+artifacts/
+scratch/
+migrations/
+.pytest_cache/
+*.pdf
+*.pptx
+*.csv
+*.png
+*.log
+dev_assets/
+
+# Secrets — NEVER bake into image
+client_secret*.json
+*.pem
+*.key

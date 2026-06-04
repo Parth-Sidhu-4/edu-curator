@@ -1,0 +1,55 @@
+# =============================================================================
+# systemd Unit File — Edu-Curator Dashboard
+# =============================================================================
+# Installation (on a Linux server):
+#   sudo cp infra/edu-curator.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable edu-curator
+#   sudo systemctl start edu-curator
+#
+# Check status:   sudo systemctl status edu-curator
+# View logs:      sudo journalctl -u edu-curator -f
+# Restart:        sudo systemctl restart edu-curator
+# Stop:           sudo systemctl stop edu-curator
+# =============================================================================
+
+[Unit]
+Description=Edu-Curator Dashboard & Curation Pipeline
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# ---------- Identity ----------
+User=curator
+Group=curator
+WorkingDirectory=/opt/edu-curator
+
+# ---------- Process ----------
+ExecStart=/opt/edu-curator/.venv/bin/python dashboard/serve.py
+Restart=always
+RestartSec=5
+# Wait up to 30s for clean shutdown before SIGKILL
+TimeoutStopSec=30
+
+# ---------- Environment ----------
+# Load secrets from .env file (never committed to git)
+EnvironmentFile=/opt/edu-curator/.env
+Environment=PYTHONPATH=/opt/edu-curator/src
+Environment=PYTHONUNBUFFERED=1
+
+# ---------- Logging ----------
+# Logs appear in: journalctl -u edu-curator
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=edu-curator
+
+# ---------- Security Hardening ----------
+# Prevent the process from gaining new privileges
+NoNewPrivileges=yes
+# Restrict writable filesystem paths to the data directory only
+ReadWritePaths=/opt/edu-curator/data /tmp
+PrivateTmp=yes
+ProtectSystem=strict
+
+[Install]
+WantedBy=multi-user.target

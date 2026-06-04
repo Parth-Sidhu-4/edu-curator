@@ -1,0 +1,75 @@
+Created At: 2026-06-03T07:11:48Z
+Completed At: 2026-06-03T07:11:48Z
+File Path: `file:///d:/Internship/dashboard/app.js`
+Total Lines: 1924
+Total Bytes: 69195
+Showing lines 1 to 800
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: // ═══════════════════════════════════════════════════════════════
+2: // EDU-CURATOR DASHBOARD — app.js
+3: // ═══════════════════════════════════════════════════════════════
+4: 
+5: // ═══════════════════════════════════════════════════════════════
+6: // 1. INITIALIZATION
+7: // ═══════════════════════════════════════════════════════════════
+8: 
+9: let db;
+10: try {
+11:   db = window.supabase.createClient(
+12:     window.__SUPABASE_URL__,
+13:     window.__SUPABASE_KEY__
+14:   );
+15: } catch (e) {
+16:   console.error('Failed to initialize Supabase client:', e);
+17:   document.getElementById('main-content').innerHTML =
+18:     '<p style="color:#f87171;padding:40px;">Failed to connect to Supabase. Check browser console.</p>';
+19: }
+20: 
+21: const $  = (sel, ctx = document) => ctx.querySelector(sel);
+22: const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+23: 
+24: const mainContent  = $('#main-content');
+25: const sidebarNav   = $('#sidebar-nav');
+26: const indicator    = $('#sidebar-indicator');
+27: const toastBox     = $('#toast-container');
+28: 
+29: if (window.marked) {
+30:   const rende
+<truncated 30033 bytes>
+ick', async () => {
+766:       const jobId = resetBtn.dataset.jobId;
+767:       resetBtn.disabled = true;
+768:       resetBtn.textContent = 'Resetting...';
+769:       await db.from('curation_jobs').update({ status: 'failed', error_message: 'Manually reset by user' }).eq('id', jobId);
+770:       toast('Job reset successfully', 'success');
+771:       renderContent();
+772:     });
+773:   }
+774:   applyCustomSelects(mainContent);
+775:   renderMath(mainContent);
+776: }
+777: 
+778: function renderCurriculum(content, cur, topic) {
+779:   const confidence = content.confidence_score != null ? content.confidence_score : '—';
+780:   const consistency = content.consistency_check_status != null ? (content.consistency_check_status ? 'Passed' : 'Failed') : '—';
+781:   const reviewStatus = content.review_status || 'needs_review';
+782: 
+783:   const sections = [
+784:     { key: 'summary',             title: 'Summary',             rows: 3 },
+785:     { key: 'definition',          title: 'Definition',          rows: 3 },
+786:     { key: 'purpose',             title: 'Purpose',             rows: 3 },
+787:     { key: 'key_properties',      title: 'Key Properties',      rows: 4, array: true },
+788:     { key: 'benefits',            title: 'Benefits',            rows: 4, array: true },
+789:     { key: 'limitations',         title: 'Limitations',         rows: 4, array: true },
+790:     { key: 'common_misconceptions', title: 'Common Misconceptions', rows: 4, array: true },
+791:     { key: 'related_topics',      title: 'Related Topics',      rows: 3, array: true },
+792:   ];
+793: 
+794:   let html = `
+795:     <hr class="section-divider" />
+796:     <div class="content-meta">
+797:       <span>Confidence: <strong>${esc(String(confidence))}</strong></span>
+798:       <span>Consistency: <strong>${esc(consistency)}</strong></span>
+799:     </div>
+800:   `;
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

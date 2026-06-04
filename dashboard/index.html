@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edu-Curator Dashboard</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Phosphor Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css" integrity="sha384-GzhNOdwUkh38xzoNEY1vRdLr+w8q+bXEJsd/km6Ef61w1Kfk+lself6cn14ilrpO" crossorigin="anonymous" />
+
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous" />
+  <script nonce="{{CSP_NONCE}}" src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js" integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx" crossorigin="anonymous"></script>
+  <script nonce="{{CSP_NONCE}}" src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+
+  <!-- Marked -->
+  <script nonce="{{CSP_NONCE}}" src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" integrity="sha384-948ahk4ZmxYVYOc+rxN1H2gM1EJ2Duhp7uHtZ4WSLkV4Vtx5MUqnV+l7u9B+jFv+" crossorigin="anonymous"></script>
+
+  <!-- DOMPurify (SEC-06) -->
+  <script nonce="{{CSP_NONCE}}" src="purify.min.js?v={{BUILD_HASH}}"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css?v={{BUILD_HASH}}" />
+</head>
+<body>
+
+  <!-- ===== GORGEOUS ONE-PAGE LANDING EXPERIENCE ===== -->
+  <div id="login-screen" style="display:flex; flex-direction:column;">
+    
+    <!-- Grain Overlay -->
+    <div class="landing-grain"></div>
+
+    <!-- Skip Navigation Link for Keyboard Accessibility -->
+    <a href="#cta-portal" class="skip-link">Skip to Access Portal</a>
+
+    <!-- Header Navigation -->
+    <header class="landing-header">
+      <div class="landing-brand">
+        <div class="landing-logo-mark" aria-hidden="true"><i class="ph-light ph-book-open"></i></div>
+        <div class="landing-brand-text">
+          <span class="brand-title">Edu-Curator</span>
+          <span class="brand-subtitle">Knowledge Curation Platform</span>
+        </div>
+      </div>
+      <nav class="landing-nav" aria-label="Main Navigation">
+        <a href="#about" class="nav-link">Engine</a>
+        <a href="#pipeline" class="nav-link">Pipeline</a>
+        <a href="#sandbox" class="nav-link">Sandbox</a>
+        <a href="#rigor" class="nav-link">Verification</a>
+        <a href="#metrics" class="nav-link">Metrics</a>
+      </nav>
+      <div class="landing-header-actions">
+        <a href="#cta-portal" class="btn btn-secondary btn-sm" id="btn-header-signin"><i class="ph-light ph-sign-in" aria-hidden="true"></i> Access Console</a>
+      </div>
+    </header>
+
+    <!-- Scrollable Body Container -->
+    <div class="landing-scroll-container">
+      
+      <!-- Hero Section -->
+      <section class="landing-section landing-hero" id="hero" aria-label="Introduction">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <span class="hero-tag">CANONICAL EDUCATION AT SCALE</span>
+            <h1 class="hero-title">Transforming Information Complexity into <span class="text-serif-italic">Educational Clarity</span></h1>
+            <p class="hero-description">
+              Edu-Curator is an intelligent Retrieval-Augmented Generation (RAG) synthesis platform. It ingests multi-source documentation, resolves knowledge conflicts, and compiles canonical educational materials with human-in-the-loop validation.
+            </p>
+            <div class="hero-actions">
+              <a href="#sandbox" class="btn btn-primary">Try Interactive Sandbox</a>
+              <a href="#cta-portal" class="btn btn-secondary">Access Portal</a>
+            </div>
+          </div>
+          <div class="hero-visual">
+            <div class="rag-pipeline-graphic-svg">
+              <svg viewBox="0 0 400 420" width="100%" height="100%" class="hero-svg" aria-label="Animated RAG pipeline visual showing files chunked, filtered by vector search, resolved for conflicts, and synthesized into a final textbook.">
+                <!-- Definition of gradients and markers -->
+                <defs>
+                  <linearGradient id="svg-grad-accent" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0c433b" />
+                    <stop offset="100%" stop-color="#1b5c46" />
+                  </linearGradient>
+                  <filter id="svg-shadow" x="-10%" y="-10%" width="120%" height="120%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#14221f" flood-opacity="0.04" />
+                  </filter>
+                </defs>
+
+                <!-- Flow Paths -->
+                <path d="M 200,95 L 200,165" class="flow-path path-1" />
+                <path d="M 200,235 L 200,305" class="flow-path path-2" />
+
+                <!-- Nodes -->
+                <!-- Raw Materials Node -->
+                <g class="svg-node node-raw" transform="translate(40, 30)">
+                  <rect width="320" height="65" rx="6" fill="#ffffff" stroke="#e2dac7" filter="url(#svg-shadow)" />
+                  <rect width="320" height="65" rx="6" fill="rgba(12,67,59,0.01)" />
+                  <rect x="0" y="0" width="4" height="65" fill="#e2dac7" rx="2" />
+                  <!-- File Icon representation -->
+                  <rect x="24" y="22" width="16" height="20" rx="2" fill="none" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="28" y1="27" x2="36" y2="27" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="28" y1="32" x2="36" y2="32" stroke="#0c433b" stroke-width="1.5" />
+                  <text x="56" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="13.5" font-weight="700" fill="#14221f">Raw Materials (PDFs, PPTXs)</text>
+                </g>
+
+                <!-- RAG Engine Node -->
+                <g class="svg-node node-engine" transform="translate(40, 170)">
+                  <rect width="320" height="65" rx="6" fill="#ffffff" stroke="#0c433b" stroke-width="1.5" filter="url(#svg-shadow)" />
+                  <rect x="0" y="0" width="4" height="65" fill="#0c433b" rx="2" />
+                  <!-- CPU Icon representation -->
+                  <rect x="22" y="22" width="20" height="20" rx="4" fill="none" stroke="#0c433b" stroke-width="1.5" />
+                  <rect x="27" y="27" width="10" height="10" rx="1" fill="#0c433b" />
+                  <line x1="20" y1="27" x2="22" y2="27" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="20" y1="37" x2="22" y2="37" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="42" y1="27" x2="44" y2="27" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="42" y1="37" x2="44" y2="37" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="27" y1="20" x2="27" y2="22" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="37" y1="20" x2="37" y2="22" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="27" y1="42" x2="27" y2="44" stroke="#0c433b" stroke-width="1.5" />
+                  <line x1="37" y1="42" x2="37" y2="44" stroke="#0c433b" stroke-width="1.5" />
+                  <text x="56" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="13.5" font-weight="700" fill="#14221f">RAG Processing Engine</text>
+                  <!-- Pulse animation rings inside SVG -->
+                  <circle cx="32" cy="32" r="18" fill="none" stroke="#0c433b" stroke-width="1" opacity="0.3" class="svg-pulse-ring" />
+                </g>
+
+                <!-- Textbook Node -->
+                <g class="svg-node node-textbook" transform="translate(40, 310)">
+                  <rect width="320" height="65" rx="6" fill="#ffffff" stroke="#e2dac7" filter="url(#svg-shadow)" />
+                  <rect x="0" y="0" width="4" height="65" fill="#1b5c46" rx="2" />
+                  <!-- Book Icon representation -->
+                  <path d="M 22,23 L 31,23 C 32,23 33,24 33,25 L 33,41 C 33,39 31,39 29,39 L 22,39 Z" fill="none" stroke="#1b5c46" stroke-width="1.5" />
+                  <path d="M 42,23 L 33,23 C 32,23 31,24 31,25 L 31,41 C 31,39 33,39 35,39 L 42,39 Z" fill="none" stroke="#1b5c46" stroke-width="1.5" />
+                  <text x="56" y="38" font-family="'Plus Jakarta Sans', sans-serif" font-size="13.5" font-weight="700" fill="#14221f">Canonical Digital Textbook</text>
+                </g>
+
+                <!-- Data Packets (flowing along paths) -->
+                <circle cx="200" cy="95" r="4" fill="#0c433b" class="data-dot dot-1" />
+                <circle cx="200" cy="235" r="4" fill="#1b5c46" class="data-dot dot-2" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Chapter 1 - Core Philosophy -->
+      <section class="landing-section" id="about" aria-label="Core Philosophy">
+        <div class="section-container">
+          <span class="section-tag-small">CHAPTER I</span>
+          <h2 class="section-title-editorial">Synthesizing authoritative textbooks from unstructured data</h2>
+          <div class="editorial-grid">
+            <div class="editorial-col">
+              <div class="editorial-icon" aria-hidden="true"><i class="ph-light ph-file-arrow-up"></i></div>
+              <h3>Secure Multi-Format Ingestion</h3>
+              <p>Upload PDFs, presentations, and documents. System runs secure file signature checks dynamically to protect curation pipeline integrity.</p>
+            </div>
+            <div class="editorial-col">
+              <div class="editorial-icon" aria-hidden="true"><i class="ph-light ph-compass"></i></div>
+              <h3>Semantic Curriculum Mapping</h3>
+              <p>Automatically segments files and maps relevant passages to specific chapter subtopics using high-performance vector matching.</p>
+            </div>
+            <div class="editorial-col">
+              <div class="editorial-icon" aria-hidden="true"><i class="ph-light ph-lightbulb"></i></div>
+              <h3>AI-Driven Synthesis</h3>
+              <p>Compiles structured fact extractions into plain-text summaries, detailed descriptions, mathematical LaTeX equations, and textbook chapters.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Chapter 2 - Pipeline Architecture -->
+      <section class="landing-section bg-secondary-section" id="pipeline" aria-label="Pipeline Architecture">
+        <div class="section-container">
+          <span class="section-tag-small">CHAPTER II</span>
+          <h2 class="section-title-editorial">Curation Pipeline Architecture</h2>
+          <div class="timeline-visual">
+            <div class="timeline-step">
+              <div class="step-num">01</div>
+              <div class="step-content">
+                <h4>Ingestion & OCR Extraction</h4>
+                <p>Sources are chunked dynamically, converting text, math equations, and tables into searchable markdown vectors.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <div class="step-num">02</div>
+              <div class="step-content">
+                <h4>Fact Mining</h4>
+                <p>LLM agents mine properties, benefits, and misconceptions, logging trace parameters dynamically for observability.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <div class="step-num">03</div>
+              <div class="step-content">
+                <h4>Conflict Resolution</h4>
+                <p>Synthesizes overlapping source material into consolidated facts based on source-trust ratings and resolution heuristics.</p>
+              </div>
+            </div>
+            <div class="timeline-step">
+              <div class="step-num">04</div>
+              <div class="step-content">
+                <h4>Textbook Compiling</h4>
+                <p>Assembles finalized definitions, key FAQs, LaTeX variables, and markdown images into a structured curriculum page.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Interactive Sandbox / Simulator -->
+      <section class="landing-section" id="sandbox" aria-label="Interactive Sandbox">
+        <div class="section-container">
+          <span class="section-tag-small">INTERACTIVE SANDBOX</span>
+          <h2 class="section-title-editorial">Observe the synthesis pipeline in real-time</h2>
+          <p class="large-para">Experience how the RAG processor resolves source conflicts, extracts verified knowledge, and typesets canonical curriculum sheets.</p>
+          
+          <div class="sandbox-widget">
+            <div class="sandbox-header-bar">
+              <span class="sandbox-header-label">Curation Simulation Sandbox</span>
+              <div class="sandbox-status" id="sim-status-indicator">
+                <span class="status-dot" style="background-color: var(--text-tertiary);"></span>
+                <span class="status-lbl">Idle</span>
+              </div>
+            </div>
+            <div class="sandbox-controls">
+              <div class="scenario-selector-group">
+                <span class="scenario-selector-label">Choose Topic Scenario:</span>
+                <div class="scenario-selector" role="radiogroup" aria-label="Simulation Topic">
+                  <button type="button" class="btn-scenario active" data-scenario="cicd" role="radio" aria-checked="true">DevOps CI/CD</button>
+                  <button type="button" class="btn-scenario" data-scenario="weights" role="radio" aria-checked="false">NN Weights</button>
+                  <button type="button" class="btn-scenario" data-scenario="hnsw" role="radio" aria-checked="false">Vector Indices</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-run-simulation" id="btn-run-sim">
+                <i class="ph-light ph-play-circle" aria-hidden="true"></i> Run Simulation
+              </button>
+            </div>
+
+            <div class="sandbox-workspace">
+              <!-- Progress Tracker -->
+              <div class="sandbox-progress-tracker" aria-label="Simulation Steps">
+                <div class="sim-step" data-sim-step="1">
+                  <div class="sim-step-indicator">
+                    <span class="sim-step-index">1</span>
+                    <i class="ph-light ph-check" aria-hidden="true"></i>
+                  </div>
+                  <span class="sim-step-name">Ingest & OCR</span>
+                </div>
+                <div class="sim-step" data-sim-step="2">
+                  <div class="sim-step-indicator">
+                    <span class="sim-step-index">2</span>
+                    <i class="ph-light ph-check" aria-hidden="true"></i>
+                  </div>
+                  <span class="sim-step-name">Fact Mining</span>
+                </div>
+                <div class="sim-step" data-sim-step="3">
+                  <div class="sim-step-indicator">
+                    <span class="sim-step-index">3</span>
+                    <i class="ph-light ph-check" aria-hidden="true"></i>
+                  </div>
+                  <span class="sim-step-name">Resolve Conflicts</span>
+                </div>
+                <div class="sim-step" data-sim-step="4">
+                  <div class="sim-step-indicator">
+                    <span class="sim-step-index">4</span>
+                    <i class="ph-light ph-check" aria-hidden="true"></i>
+                  </div>
+                  <span class="sim-step-name">Compile Textbook</span>
+                </div>
+              </div>
+
+              <!-- Terminal log display -->
+              <div class="sandbox-terminal">
+                <div class="terminal-header-sim">
+                  <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                  </div>
+                  <span class="terminal-title">RAG Engine Trace Logs</span>
+                </div>
+                <div class="terminal-body-sim" id="sim-terminal-output" aria-live="polite">
+                  <div class="terminal-line system-msg">[SYSTEM] Ready. Select a scenario and click "Run Simulation" to observe tracing metrics.</div>
+                </div>
+              </div>
+
+              <!-- Final Outcome Preview -->
+              <div class="sandbox-outcome" id="sim-preview-area" style="display:none;">
+                <div class="sandbox-outcome-header">
+                  <i class="ph-light ph-book-open" aria-hidden="true"></i> Compiled Textbook Preview
+                </div>
+                <div class="sandbox-outcome-body" id="sim-preview-content">
+                  <!-- Generated outcomes injected here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Chapter 3 - Human Verification -->
+      <section class="landing-section" id="rigor" aria-label="Human Verification">
+        <div class="section-container">
+          <div class="dual-column-grid">
+            <div class="text-content">
+              <span class="section-tag-small">CHAPTER III</span>
+              <h2 class="section-title-editorial">Expert Reviewer Oversight</h2>
+              <p class="large-para">Large-scale automation requires human validation to guarantee academic truth, authority, and editorial value.</p>
+              <div class="features-list-minimal">
+                <div class="feature-item-minimal">
+                  <div class="feature-icon" aria-hidden="true"><i class="ph-light ph-warning-circle"></i></div>
+                  <div>
+                    <h5>Conflict Signals</h5>
+                    <p>Highlights contradicting values or single-source information, flagging them for priority human oversight.</p>
+                  </div>
+                </div>
+                <div class="feature-item-minimal">
+                  <div class="feature-icon" aria-hidden="true"><i class="ph-light ph-note-pencil"></i></div>
+                  <div>
+                    <h5>Manual Overrides</h5>
+                    <p>Enables reviewers to directly edit, add, or delete any generated textbook section before publication.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="visual-content">
+              <div class="mock-interface-card">
+                <div class="card-title-bar">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="card-title-text">Conflict Resolution Console</span>
+                </div>
+                <div class="card-body-mock">
+                  <div class="mock-signal-header">
+                    <span class="badge badge-conflict">⚠️ CONFLICT DETECTED</span>
+                    <h4>Field: definition</h4>
+                  </div>
+                  <div class="mock-versions">
+                    <div class="mock-version source-a">
+                      <span class="version-lbl">Source A: DevOps Manual</span>
+                      <p>"Continuous Integration is a developer practice of committing code weekly..."</p>
+                    </div>
+                    <div class="mock-version source-b">
+                      <span class="version-lbl">Source B: CI/CD Standard</span>
+                      <p>"Continuous Integration requires developers to integrate code daily..."</p>
+                    </div>
+                  </div>
+                  <div class="mock-resolution">
+                    <span class="badge badge-resolved">Resolved Canonical Value</span>
+                    <p>"Continuous Integration is the practice of automating the integration of code changes from multiple contributors into a single software project multiple times a day."</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Chapter 4 - Metrics -->
+      <section class="landing-section bg-secondary-section" id="metrics" aria-label="Observability Metrics">
+        <div class="section-container">
+          <span class="section-tag-small">CHAPTER IV</span>
+          <h2 class="section-title-editorial">Algorithmic Observability & Verification</h2>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-value">9.8<span class="metric-max">/10</span></div>
+              <h5>Faithfulness Score</h5>
+              <p>Evaluates whether generated texts remain strictly loyal to canonical sources, checking for AI hallucinations.</p>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">9.5<span class="metric-max">/10</span></div>
+              <h5>Completeness Score</h5>
+              <p>Assesses if all verified facts from source materials are explained and mapped into final chapters.</p>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">&lt; 1.2<span class="metric-unit">s</span></div>
+              <h5>Average Latency</h5>
+              <p>Optimized Retrieval-Augmented Generation execution with Cerebras/Groq engine guarantees prompt curation.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Access Portal Console -->
+      <section class="landing-section landing-cta" id="cta-portal" aria-label="Access Portal">
+        <div class="cta-card">
+          <div class="cta-info">
+            <h2>Authorized Access Portal</h2>
+            <p>Access the Edu-Curator Curation Console to manage topics, upload sources, and verify generated textbook content. Credentials are authenticated securely via Supabase.</p>
+          </div>
+          <div class="cta-form-area">
+            
+            <div class="login-card-editorial">
+              <div class="login-card-header">
+                <div class="login-card-seal" aria-hidden="true">
+                  <i class="ph-light ph-book-open"></i>
+                </div>
+                <h3>Console Sign In</h3>
+                <p>Edu-Curator Curation System</p>
+              </div>
+              
+              <!-- Google OAuth button -->
+              <button class="btn-google-editorial" id="btn-google-signin" aria-label="Sign in using Google account credentials">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.64 9.2045C17.64 8.5663 17.5827 7.9527 17.4764 7.3636H9V10.845H13.8436C13.635 11.97 13.0009 12.9231 12.0477 13.5613V15.8195H14.9564C16.6582 14.2527 17.64 11.9454 17.64 9.2045Z" fill="#4285F4"/>
+                  <path d="M9 18C11.43 18 13.4673 17.1941 14.9564 15.8195L12.0477 13.5613C11.2418 14.1013 10.2109 14.4204 9 14.4204C6.65591 14.4204 4.67182 12.8372 3.96409 10.71H0.957275V13.0418C2.43818 15.9831 5.48182 18 9 18Z" fill="#34A853"/>
+                  <path d="M3.96409 10.71C3.78409 10.17 3.68182 9.5931 3.68182 9C3.68182 8.4068 3.78409 7.8299 3.96409 7.29V4.9581H0.957275C0.347727 6.1731 0 7.5477 0 9C0 10.4522 0.347727 11.8268 0.957275 13.0418L3.96409 10.71Z" fill="#FBBC05"/>
+                  <path d="M9 3.5795C10.3213 3.5795 11.5077 4.0336 12.4405 4.9254L15.0218 2.344C13.4632 0.8918 11.4259 0 9 0C5.48182 0 2.43818 2.0168 0.957275 4.9581L3.96409 7.29C4.67182 5.1627 6.65591 3.5795 9 3.5795Z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+              </button>
+
+              <div class="login-divider-editorial"><span>or use credentials</span></div>
+
+              <!-- Email / Password form -->
+              <form id="login-form" autocomplete="on">
+                <div class="form-group-editorial">
+                  <label class="form-label-editorial" for="login-email">Email Address</label>
+                  <input type="email" id="login-email" name="email" class="form-input-editorial" placeholder="you@test.com" autocomplete="email" required />
+                </div>
+                <div class="form-group-editorial">
+                  <label class="form-label-editorial" for="login-password">Password</label>
+                  <input type="password" id="login-password" name="password" class="form-input-editorial" placeholder="••••••••" autocomplete="current-password" required />
+                </div>
+                <button type="submit" class="btn-login-editorial" id="btn-email-signin">Sign In to Console</button>
+              </form>
+
+              <p class="login-error-editorial" id="login-error" aria-live="polite"></p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="landing-footer" role="contentinfo">
+        <div class="footer-bottom">
+          <p>© 2026 Edu-Curator RAG Platform. All rights reserved.</p>
+          <div class="footer-badges">
+            <span class="badge badge-neutral">Security Hardened</span>
+            <span class="badge badge-neutral">Human-in-the-Loop</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- ===== APP SHELL (hidden until auth confirmed) ===== -->
+  <div class="app-shell" id="app-shell" style="display:none;">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <h1>Edu-Curator</h1>
+        <span>RAG Pipeline</span>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <div class="sidebar-indicator" id="sidebar-indicator"></div>
+        <div class="sidebar-nav-item active" data-view="overview">
+          <i class="ph-light ph-squares-four"></i><span>Overview</span>
+        </div>
+        <div class="sidebar-nav-item" data-view="content">
+          <i class="ph-light ph-book-open"></i><span>Content Viewer</span>
+        </div>
+        <div class="sidebar-nav-item" data-view="topics">
+          <i class="ph-light ph-folders"></i><span>Topics</span>
+        </div>
+        <div class="sidebar-nav-item" data-view="sources">
+          <i class="ph-light ph-plug"></i><span>Sources</span>
+        </div>
+        <div class="sidebar-nav-item" data-view="observability">
+          <i class="ph-light ph-chart-line"></i><span>Observability</span>
+        </div>
+        <div class="sidebar-nav-item" data-view="evaluation">
+          <i class="ph-light ph-check-circle"></i><span>Evaluation</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <i class="ph-light ph-user-circle"></i>
+          <span id="sidebar-user-email" class="sidebar-user-email">—</span>
+        </div>
+        <button class="btn-signout" id="btn-signout" title="Sign out">
+          <i class="ph-light ph-sign-out"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <div class="content-wrapper-floating" id="main-content"></div>
+    </main>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Supabase JS -->
+  <script nonce="{{CSP_NONCE}}" src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" integrity="sha384-o+Hkm/usHFhCEWo1Ae1cLsOLiQQNrD2UfI424QDAaiZR7URnC8v35ey7s2sbGZHB" crossorigin="anonymous"></script>
+
+  <!-- Runtime config injected by Python server -->
+  <script nonce="{{CSP_NONCE}}">
+    window.__SUPABASE_URL__ = '{{SUPABASE_URL_VALUE}}';
+    window.__SUPABASE_KEY__ = '{{SUPABASE_KEY_VALUE}}';
+  </script>
+
+  <!-- App -->
+  <script nonce="{{CSP_NONCE}}" type="module" src="app.js?v={{BUILD_HASH}}"></script>
+</body>
+</html>

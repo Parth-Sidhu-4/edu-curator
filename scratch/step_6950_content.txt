@@ -1,0 +1,98 @@
+Created At: 2026-06-03T10:21:00Z
+Completed At: 2026-06-03T10:21:01Z
+
+				The command completed successfully.
+				Output:
+				Total lines: 2271
+
+--- Occurrence at line 958 ---
+944:         }
+945:         const conf = f.extraction_confidence != null ? f.extraction_confidence.toFixed(2) : '�';
+946:         return `
+947:           <tr>
+948:             <td><strong>${esc(f.field_name)}</strong></td>
+949:             <td>${esc(valStr)}</td>
+950:             <td><span class="pill pill-accent">${esc(conf)}</span></td>
+951:             <td><span class="text-sm text-muted">${esc(f.source_id || '�')}</span></td>
+952:           </tr>
+953:         `;
+954:       }).join('');
+955: 
+956:       factsHtml = `
+957:         <div class="collapsible-section mt-24" id="facts-collapsible">
+958:           <button class="collapsible-header" id="facts-toggle" aria-expanded="false" aria-controls="facts-body">
+959:             <span class="collapsible-title">
+960:               <i class="ph-light ph-list-bullets"></i>
+961:               Extracted Facts
+962:               <span class="pill pill-neutral" style="font-size:0.7rem;padding:2px 8px;margin-left:6px;">${factsData.length}</span>
+963:             </span>
+964:             <i class="ph-light ph-caret-down collapsible-chevron"></i>
+965:           </button>
+966:           <div class="collapsible-body" id="facts-body" hidden>
+967:             <div class="table-wrap mb-8">
+968:               <table>
+969:                 <thead>
+970:                   <tr>
+971:                     <th>Field Name</th>
+972:                     <th>Value</th>
+973:                     <th>Confidence</th>
+
+--- Occurrence at line 1012 ---
+998:         }
+999:         const conf = f.extraction_confidence != null ? f.extraction_confidence.toFixed(2) : '�';
+1000:         return `
+1001:           <tr>
+1002:             <td><strong>${esc(f.field_name)}</strong></td>
+1003:             <td>${esc(valStr)}</td>
+1004:             <td><span class="pill pill-accent">${esc(conf)}</s
+<truncated 236 bytes>
+collapsible-section mt-24" id="facts-collapsible">
+1012:           <button class="collapsible-header" id="facts-toggle" aria-expanded="false" aria-controls="facts-body">
+1013:             <span class="collapsible-title">
+1014:               <i class="ph-light ph-list-bullets"></i>
+1015:               Extracted Facts
+1016:               <span class="pill pill-neutral" style="font-size:0.7rem;padding:2px 8px;margin-left:6px;">${factsData.length}</span>
+1017:             </span>
+1018:             <i class="ph-light ph-caret-down collapsible-chevron"></i>
+1019:           </button>
+1020:           <div class="collapsible-body" id="facts-body" hidden>
+1021:             <div class="table-wrap mb-8">
+1022:               <table>
+1023:                 <thead>
+1024:                   <tr>
+1025:                     <th>Field Name</th>
+1026:                     <th>Value</th>
+1027:                     <th>Confidence</th>
+
+--- Occurrence at line 1089 ---
+1075:       const jobId = resetBtn.dataset.jobId;
+1076:       resetBtn.disabled = true;
+1077:       resetBtn.textContent = 'Resetting...';
+1078:       try {
+1079:         await resetJob('curation_jobs', jobId);
+1080:         toast('Job reset successfully', 'success');
+1081:       } catch (error) {
+1082:         toast(`Reset failed: ${error.message}`, 'error');
+1083:       }
+1084:       renderContent();
+1085:     });
+1086:   }
+1087: 
+1088:   // Wire up collapsible facts toggle
+1089:   const factsToggle = $('#facts-toggle');
+1090:   if (factsToggle) {
+1091:     factsToggle.addEventListener('click', () => {
+1092:       const body = $('#facts-body');
+1093:       const isOpen = factsToggle.getAttribute('aria-expanded') === 'true';
+1094:       factsToggle.setAttribute('aria-expanded', String(!isOpen));
+1095:       if (isOpen) {
+1096:         body.hidden = true;
+1097:       } else {
+1098:         body.hidden = false;
+1099:       }
+1100:     });
+1101:   }
+1102: 
+1103:   applyCustomSelects(mainContent);
+1104:   renderMath(mainContent);
+

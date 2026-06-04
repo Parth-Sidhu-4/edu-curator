@@ -1,0 +1,23 @@
+[
+  {
+    "id": "11111111-2222-3333-4444-555555555555",
+    "topic_id": "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5",
+    "content_json": {
+      "summary": "Mock summary",
+      "definition": "Mock definition"
+    },
+    "schema_version": null,
+    "generation_model": null,
+    "sources_used": [],
+    "confidence_score": null,
+    "consistency_check_status": null,
+    "consistency_check_flags": null,
+    "review_status": "pending",
+    "reviewer_id": null,
+    "reviewed_at": null,
+    "review_notes": null,
+    "published_at": null,
+    "inputs_hash": "06fa4de2e53428c59ebda7943a9f84b0a86daaa840da4d2f8c8082a291fdddd6",
+    "created_at": "2026-06-02T07:02:39.997607Z"
+  }
+]

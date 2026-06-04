@@ -1,0 +1,89 @@
+Created At: 2026-06-03T10:21:09Z
+Completed At: 2026-06-03T10:21:10Z
+File Path: `file:///d:/Internship/dashboard/app.js`
+Total Lines: 2272
+Total Bytes: 84148
+Showing lines 818 to 930
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+818:             <span>${statusPill('needs_review')} <strong>${reviewCount}</strong></span>
+819:             <span>${statusPill('missing')} <strong>${missingCount}</strong></span>
+820:             <span>${statusPill('resolved')} <strong>${resolvedCount}</strong></span>
+821:           </div>
+822:           <div class="review-signal-list">
+823:             ${signalRows}
+824:           </div>
+825:         </section>
+826:       </div>
+827:     </div>
+828:   `;
+829: }
+830: 
+831: async function renderContent() {
+832:   await fetchTopics();
+833:   await fetchContent();
+834: 
+835:   const selectedId = state.selectedTopicId;
+836:   const topic = state.topics.find(t => t.id === selectedId);
+837:   const content = state.content.find(c => c.topic_id === selectedId);
+838: 
+839:   let jobHtml = '';
+840:   let contentHtml = '';
+841: 
+842:   if (selectedId) {
+843:     const jobs = await fetchJobs(selectedId);
+844:     let latestJob = jobs.find(j => j.status === 'running' || j.status === 'processing');
+845:     if (!latestJob) {
+846:       latestJob = jobs.find(j => j.status === 'pending');
+847:     }
+848:     if (!latestJob) {
+849:       latestJob = jobs[0];
+850:     }
+851: 
+852:     // Generate / Re-generate button
+853:     const hasActiveJob = latestJob && (latestJob.status === 'processing' || latestJob.status === 'pending' || latestJob.status === 'running');
+854:     jobHtml = `
+855:       <div class="mt-24 flex-between">
+856:         <button class="btn btn-primary" id="btn-generate" ${hasActiveJob ? 'disabled' : ''}>
+857:           ${hasActiveJob ? 'Generating Content...' : (content ?
+<truncated 2145 bytes>
+ the new content
+892:               if (!activeJob || (activeJob.status !== 'running' && activeJob.status !== 'processing' && activeJob.status !== 'pending')) {
+893:                 clearInterval(state._jobPollTimer);
+894:                 state._jobPollTimer = null;
+895:                 renderContent();
+896:                 return;
+897:               }
+898: 
+899:               // Update log box and status dynamically in-place to avoid screen flickering
+900:               const logBox = document.getElementById('job-log-box');
+901:               const statusContainer = document.getElementById('job-status-container');
+902:               if (logBox) {
+903:                 logBox.textContent = activeJob.logs || `[System] Job is ${activeJob.status}. Waiting for worker to start streaming logs...`;
+904:                 logBox.scrollTop = logBox.scrollHeight;
+905:               }
+906:               if (statusContainer) {
+907:                 statusContainer.innerHTML = statusPill(activeJob.status);
+908:               }
+909:             } else {
+910:               clearInterval(state._jobPollTimer);
+911:               state._jobPollTimer = null;
+912:             }
+913:           }, 2000);
+914:         }
+915:       }
+916:     } else {
+917:       // Clear auto-refresh if job is finished or not running
+918:       if (state._jobPollTimer) {
+919:         clearInterval(state._jobPollTimer);
+920:         state._jobPollTimer = null;
+921:       }
+922:     }
+923: 
+924:     const knowledgeRecord = await fetchLatestKnowledge(selectedId);
+925: 
+926:     // Fetch facts for this topic
+927:     let factsHtml = '';
+928:     const { data: factsData } = await db.from('fact_extractions').select('*').eq('topic_id', selectedId);
+929:     if (factsData && factsData.length > 0) {
+930:       const factRows = factsData.map(f => {
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

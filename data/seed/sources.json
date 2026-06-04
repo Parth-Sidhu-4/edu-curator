@@ -1,0 +1,485 @@
+[
+  {
+    "id": "22222222-2222-2222-2222-222222222221",
+    "title": "IBM: What is the software development life cycle (SDLC)?",
+    "source_type": "website",
+    "url": "https://www.ibm.com/think/topics/sdlc",
+    "local_path": null,
+    "trust_score": 9,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "11111111-1111-1111-1111-111111111111",
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "c7d9ad4df407d53ca0238ddb8363d8e9384eb3fdfc41eb0285df9b101f6d460f",
+    "last_crawled": "2026-06-01T10:21:46.772489Z",
+    "crawl_status": "completed",
+    "created_at": null,
+    "updated_at": "2026-06-01T10:21:46.772489Z"
+  },
+  {
+    "id": "22222222-2222-2222-2222-222222222222",
+    "title": "Atlassian: What is the software development life cycle (SDLC)? The complete guide",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/agile/software-development/sdlc",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "11111111-1111-1111-1111-111111111111",
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "ed89781eb187956b796d708380896b1bc70d6da6adf2833376ae18206562654e",
+    "last_crawled": "2026-06-01T10:21:47.253791Z",
+    "crawl_status": "completed",
+    "created_at": null,
+    "updated_at": "2026-06-01T10:21:47.253791Z"
+  },
+  {
+    "id": "22222222-2222-2222-2222-222222222223",
+    "title": "AWS: What is SDLC (Software Development Lifecycle)?",
+    "source_type": "website",
+    "url": "https://aws.amazon.com/what-is/sdlc/",
+    "local_path": null,
+    "trust_score": 7,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "11111111-1111-1111-1111-111111111111",
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "17230891d537809a5e52919549da1fcccd11b44addbc15cf8a22427d3a9e2ca6",
+    "last_crawled": "2026-06-01T10:21:47.722904Z",
+    "crawl_status": "completed",
+    "created_at": null,
+    "updated_at": "2026-06-01T10:21:47.722904Z"
+  },
+  {
+    "id": "224cff16-35a3-41d9-bb05-2023b2a2dbe9",
+    "title": "GeeksForGeeks: SDLC Models - Types, Phases & Use",
+    "source_type": "website",
+    "url": "https://www.geeksforgeeks.org/software-engineering/sdlc-models-types-phases-use/",
+    "local_path": null,
+    "trust_score": 5,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "3014814e8dc3dc5e207ed09a5a9dee040490109a0e76b3ef01d457838492c787",
+    "last_crawled": "2026-06-01T11:17:10.426250Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T11:17:10.112153Z",
+    "updated_at": "2026-06-01T11:17:10.426250Z"
+  },
+  {
+    "id": "f98f6f7a-c879-4532-8493-bff59db0599c",
+    "title": "Devtron: Waterfall vs Agile vs Spiral SDLC Compared",
+    "source_type": "website",
+    "url": "https://devtron.ai/blog/waterfall-vs-agile-vs-spiral-sdlc-methodologies-compared/",
+    "local_path": null,
+    "trust_score": 5,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "2885a0e26c776a137556b0475a3b165824d403a0564d6b73b177033222d81328",
+    "last_crawled": "2026-06-01T11:17:11.396395Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T11:17:10.992604Z",
+    "updated_at": "2026-06-01T11:17:11.396395Z"
+  },
+  {
+    "id": "a0cd5bf8-ab46-4d64-9e36-dfb580f17e35",
+    "title": "WinWire: SDLC Models - Waterfall vs Agile Comparison",
+    "source_type": "website",
+    "url": "https://www.winwire.com/blog/sdlc-models-and-comparison-between-waterfall-vs-agile-models/",
+    "local_path": null,
+    "trust_score": 5,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "42f0e2b164a1619657e76a7041b300a8f90629a3b38ede220f8c0ed4f384ae70",
+    "last_crawled": "2026-06-01T11:17:13.706508Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T11:17:11.876209Z",
+    "updated_at": "2026-06-01T11:17:13.706508Z"
+  },
+  {
+    "id": "88e4c8e5-2d46-4aea-acb2-c2701eec8945",
+    "title": "Software Development PDF (1.2.3)",
+    "source_type": "pdf",
+    "url": null,
+    "local_path": "1.2.3. Software Development.pdf",
+    "trust_score": 7,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "60e86bb1c5a072a4c61d1f11dbe5134a16196b9ce2047e009e6cd8d7911ff6a5",
+    "last_crawled": "2026-06-01T11:18:00.572022Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T11:18:00.488159Z",
+    "updated_at": "2026-06-01T11:18:00.572022Z"
+  },
+  {
+    "id": "a4126bdc-9e75-4beb-82b4-e564a49d390e",
+    "title": "SDLC Overview Slides (01.01-08)",
+    "source_type": "pdf",
+    "url": null,
+    "local_path": "01.01-08.pdf",
+    "trust_score": 7,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "d1a0a11aae82709c4bd3c538e6fb362d8fba55a76d36c68adea51a0d19eaea30",
+    "last_crawled": "2026-06-01T11:18:01.117437Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T11:18:01.039032Z",
+    "updated_at": "2026-06-01T11:18:01.117437Z"
+  },
+  {
+    "id": "c3d5095e-39d5-4f43-b088-33fa84ffd518",
+    "title": "Research: Comparison of SDLC Models (IJARIIE)",
+    "source_type": "pdf",
+    "url": null,
+    "local_path": "Comparison_of_Software_Development_Life_Cycle_Models_ijariie8636.pdf",
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "f1dff306-c7cc-5370-a33b-d530c256b178",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "e32a1261ee148772427e38e138dfd4a881c9cb97263b957bc77f37466230f656",
+    "last_crawled": "2026-06-01T11:18:01.684899Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T11:18:01.623328Z",
+    "updated_at": "2026-06-01T11:18:01.684899Z"
+  },
+  {
+    "id": "674c3d9e-5e2e-467e-be7c-62e1fe7d2c46",
+    "title": "Atlassian: What is DevOps?",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "4548d070dab456410e1ed19efb67a94084f7b0891d0048a311f81d699a88016c",
+    "last_crawled": "2026-06-01T14:25:30.986656Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:29.763717Z",
+    "updated_at": "2026-06-01T14:25:30.986656Z"
+  },
+  {
+    "id": "565c65aa-5115-498b-a42f-e378812a47a5",
+    "title": "Atlassian: History of DevOps",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/history-of-devops",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "b364351ef52955b4aedc550c91ce4103e5b97871b808ef5009f7aca4b6961ade",
+    "last_crawled": "2026-06-01T14:25:33.282226Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:31.462968Z",
+    "updated_at": "2026-06-01T14:25:33.282226Z"
+  },
+  {
+    "id": "e1b6041d-9aaf-454c-ae7e-4738ff455768",
+    "title": "Atlassian: Benefits of DevOps",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/benefits-of-devops",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "f8c673dc888a2a9039f656011ec22b4dc96962ebef7c0aff821a0045c93b142b",
+    "last_crawled": "2026-06-01T14:25:35.505718Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:33.728405Z",
+    "updated_at": "2026-06-01T14:25:35.505718Z"
+  },
+  {
+    "id": "eddc46df-fb71-449d-860c-6eee19bcbb76",
+    "title": "Atlassian: DevOps Culture",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/devops-culture",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "8e666d6184b4df3153bbba6a98ba0d60ae7d32f20ed3308456455721e0991271",
+    "last_crawled": "2026-06-01T14:25:37.141323Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:35.951094Z",
+    "updated_at": "2026-06-01T14:25:37.141323Z"
+  },
+  {
+    "id": "3372fd70-5739-4d1a-9b51-9ce6a9a2a4c0",
+    "title": "Atlassian: DevOps Best Practices",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/devops-best-practices",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "9de6c38f2cae90bf028f2b0edffc4c68908ee8ea4fab6408393952b3e1882079",
+    "last_crawled": "2026-06-01T14:25:38.652229Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:37.573775Z",
+    "updated_at": "2026-06-01T14:25:38.652229Z"
+  },
+  {
+    "id": "1466e2b4-3af1-4116-b7e1-ed7c917b8c53",
+    "title": "Atlassian: Agile vs DevOps",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/agile-vs-devops",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "583121d27098f85e78abbbffcc388bce82d396672361b15e40bbf0eaf4cfdf54",
+    "last_crawled": "2026-06-01T14:25:40.151252Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:39.107096Z",
+    "updated_at": "2026-06-01T14:25:40.151252Z"
+  },
+  {
+    "id": "90fdbea5-6eef-490d-a36d-edae4177dfe6",
+    "title": "Atlassian: DevOps Engineer",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/devops-engineer",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "f82d7e02d39fc6bf48247a816121c85b33dad64ea729ec978e1fa2a82a092835",
+    "last_crawled": "2026-06-01T14:25:41.750661Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:40.650703Z",
+    "updated_at": "2026-06-01T14:25:41.750661Z"
+  },
+  {
+    "id": "26ad77a6-86fc-47b8-8a16-9148a4606ec5",
+    "title": "Atlassian: Always-On Services with DevOps",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/always-on-services",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "881c98df9653ef219f6aa4449733b2c73b61a13ff1ff30d77ec39a5cb70b16ed",
+    "last_crawled": "2026-06-01T14:25:43.316115Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:42.176736Z",
+    "updated_at": "2026-06-01T14:25:43.316115Z"
+  },
+  {
+    "id": "d79b5677-942d-47ce-b54c-9963815c6884",
+    "title": "Atlassian: How to Start with DevOps",
+    "source_type": "website",
+    "url": "https://www.atlassian.com/devops/what-is-devops/how-to-start-devops",
+    "local_path": null,
+    "trust_score": 8,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "cd4846869ba18a67f0da0f37e8f2f441fae73193ed966619fb5d4dd13a5ed58a",
+    "last_crawled": "2026-06-01T14:25:44.883579Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:43.752434Z",
+    "updated_at": "2026-06-01T14:25:44.883579Z"
+  },
+  {
+    "id": "47771eb5-5428-4f3a-87ca-ebec860a2ec9",
+    "title": "GeeksForGeeks: Introduction to DevOps",
+    "source_type": "website",
+    "url": "https://www.geeksforgeeks.org/devops/introduction-to-devops/",
+    "local_path": null,
+    "trust_score": 6,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "4e86dc4b3c56dda1d7c0124084a008561398cd2d5d66232fbd1895d572644f6c",
+    "last_crawled": "2026-06-01T14:25:45.499577Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:45.317737Z",
+    "updated_at": "2026-06-01T14:25:45.499577Z"
+  },
+  {
+    "id": "319be1f0-31f1-41dd-87a2-33241ff6c870",
+    "title": "GeeksForGeeks: DevOps Lifecycle",
+    "source_type": "website",
+    "url": "https://www.geeksforgeeks.org/devops/devops-lifecycle/",
+    "local_path": null,
+    "trust_score": 6,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "8db69d2b7ef3d089a2c97275e0d13cdd25d8ebf09e1a96c6a4e8f21e5c2f0bc5",
+    "last_crawled": "2026-06-01T14:25:46.106463Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:45.922114Z",
+    "updated_at": "2026-06-01T14:25:46.106463Z"
+  },
+  {
+    "id": "4b76a4a3-37df-4b02-b981-14ab1dadbde0",
+    "title": "GeeksForGeeks: Evolution of DevOps",
+    "source_type": "website",
+    "url": "https://www.geeksforgeeks.org/devops/the-evolution-of-devops-major-trends-for-future/",
+    "local_path": null,
+    "trust_score": 6,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "c105a76b0f13a7f07bb7a3a96fea927652e2d78aff0ea1ee00f4fc193be04fcf",
+    "last_crawled": "2026-06-01T14:25:46.714327Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:46.573369Z",
+    "updated_at": "2026-06-01T14:25:46.714327Z"
+  },
+  {
+    "id": "3504852a-7e23-49cc-98b4-2e0de3018047",
+    "title": "AWS: What is DevOps?",
+    "source_type": "website",
+    "url": "https://aws.amazon.com/devops/what-is-devops/",
+    "local_path": null,
+    "trust_score": 9,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "756e65c2e10ed2e1c632eaa6c49a794633c92daf143083673b8242479ef3212e",
+    "last_crawled": "2026-06-01T14:25:47.926826Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:47.154971Z",
+    "updated_at": "2026-06-01T14:25:47.926826Z"
+  },
+  {
+    "id": "59377f2b-5bd9-4d6f-b29d-e6b2c5e30f03",
+    "title": "Azure: What is DevOps?",
+    "source_type": "website",
+    "url": "https://azure.microsoft.com/en-in/resources/cloud-computing-dictionary/what-is-devops",
+    "local_path": null,
+    "trust_score": 9,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "0d399afe5e43f866c1a1446d0fbc79ced3c283b0f13359531ff99bcdb5c80fca",
+    "last_crawled": "2026-06-01T14:25:56.797369Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:48.370628Z",
+    "updated_at": "2026-06-01T14:25:56.797369Z"
+  },
+  {
+    "id": "1b9724d2-5ebd-46fa-ace2-4f6dd5428016",
+    "title": "IBM: What is DevOps?",
+    "source_type": "website",
+    "url": "https://www.ibm.com/think/topics/devops",
+    "local_path": null,
+    "trust_score": 9,
+    "license_type": "public documentation",
+    "publication_date": null,
+    "owner": "System Admin",
+    "topic_ids": [
+      "98b2eeec-434b-5c06-b578-013a4ffcd205",
+      "c732a9b0-908b-5dbf-98ea-fb7fbd000dd5"
+    ],
+    "content_hash": "96d6eb87bf16dbeb874612ff86f8d50543cb4b7f6d863e7ecf6de2e283aec05c",
+    "last_crawled": "2026-06-01T14:25:58.280344Z",
+    "crawl_status": "completed",
+    "created_at": "2026-06-01T14:25:57.271525Z",
+    "updated_at": "2026-06-01T14:25:58.280344Z"
+  }
+]

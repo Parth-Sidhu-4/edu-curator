@@ -1,0 +1,92 @@
+Created At: 2026-06-03T10:21:21Z
+Completed At: 2026-06-03T10:21:34Z
+The following changes were made by the replace_file_content tool to: d:\Internship\dashboard\app.js. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -876,51 +876,98 @@
+ 
+       // Set up auto-refresh
+       if (latestJob.status !== 'failed') {
+-        if (!state._jobPollTimer) {
+-          state._jobPollTimer = setInterval(async () => {
+-            if (state.view === 'content' && state.selectedTopicId === selectedId) {
+-              const jobs = await fetchJobs(selectedId);
+-              let activeJob = jobs.find(j => j.status === 'running' || j.status === 'processing');
+-              if (!activeJob) {
+-                activeJob = jobs.find(j => j.status === 'pending');
+-              }
+-              if (!activeJob) {
+-                activeJob = jobs[0];
+-              }
+-
+-              // If the job finished or failed, clear timer and do a full reload to draw the new content
+-              if (!activeJob || (activeJob.status !== 'running' && activeJob.status !== 'processing' && activeJob.status !== 'pending')) {
+-                clearInterval(state._jobPollTimer);
+-                state._jobPollTimer = null;
+-                renderContent();
+-                return;
+-              }
+-
+-              // Update log box and status dynamically in-place to avoid screen flickering
+-              const logBox = document.getElementById('job-log-box');
+-              const statusContainer = document.getElementById('job-status-container');
+-              if (logBox) {
+-                logBox.textContent = activeJob.logs || `[System] Job is ${activeJob.status}. Waiting for worker to start streaming logs...`;
+-                logBox.scrollTop = logBox.scrollHeight;
+-              }
+-              if (statusContainer) {
+-                statusContainer.innerHTML = statusPill(activeJob.status);
+-              }
+-            } else {
+-   
+<truncated 5844 bytes>
+an class="text-sm text-muted">${esc(f.source_id || '—')}</span></td>
+-          </tr>
+-        `;
+-      }).join('');
+-
+-      factsHtml = `
+-        <div class="collapsible-section mt-24" id="facts-collapsible">
+-          <button class="collapsible-header" id="facts-toggle" aria-expanded="false" aria-controls="facts-body">
+-            <span class="collapsible-title">
+-              <i class="ph-light ph-list-bullets"></i>
+-              Extracted Facts
+-              <span class="pill pill-neutral" style="font-size:0.7rem;padding:2px 8px;margin-left:6px;">${factsData.length}</span>
+-            </span>
+-            <i class="ph-light ph-caret-down collapsible-chevron"></i>
+-          </button>
+-          <div class="collapsible-body" id="facts-body" hidden>
+-            <div class="table-wrap mb-8">
+-              <table>
+-                <thead>
+-                  <tr>
+-                    <th>Field Name</th>
+-                    <th>Value</th>
+-                    <th>Confidence</th>
+-                    <th>Source ID</th>
+-                  </tr>
+-                </thead>
+-                <tbody>${factRows}</tbody>
+-              </table>
+-            </div>
+-          </div>
+-        </div>
+     const { data: factsData } = await db.from('fact_extractions').select('*').eq('topic_id', selectedId);
+     if (factsData && factsData.length > 0) {
+       const factRows = factsData.map(f => {
+@@ -1042,11 +1042,6 @@
+         <div class="empty-state mt-24">
+           <p>No content generated for this topic yet.</p>
+         </div>
+-      </select>
+-    </div>
+-
+-    ${jobHtml}
+-    ${contentHtml}
+   `;
+ 
+   // Bind events
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.
+
+We did our best to apply changes despite some inaccuracies. Double check if the edit applied is what you intended.

@@ -1,0 +1,23 @@
+
+services:
+  web:
+    build: .
+    ports:
+      - "8502:8502"         # Dashboard listens on 8502 (was incorrectly 8501)
+    env_file:
+      - .env
+    environment:
+      # Inside Docker the server must bind to all interfaces, not just loopback
+      DASHBOARD_HOST: "0.0.0.0"
+      # The in-process worker handles curation jobs (no separate worker container needed)
+      START_IN_PROCESS_WORKER: "true"
+    volumes:
+      # Mount the data folder so uploaded files and logs persist across restarts
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8502/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s

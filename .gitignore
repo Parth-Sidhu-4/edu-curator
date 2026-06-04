@@ -1,0 +1,38 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Secrets — NEVER commit these
+.env
+*.pem
+*.key
+client_secret_*.json
+
+# User-uploaded files and large data
+data/raw/sources/*
+!data/raw/sources/.gitkeep
+data/uploads/
+data/logs/
+
+# Huggingface / torch model cache (can be hundreds of MB)
+.cache/
+*.safetensors
+*.bin
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Local Dev Assets
+dev_assets/

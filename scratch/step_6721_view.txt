@@ -1,0 +1,85 @@
+Created At: 2026-06-03T10:05:05Z
+Completed At: 2026-06-03T10:05:06Z
+File Path: `file:///d:/Internship/dashboard/app.js`
+Total Lines: 2218
+Total Bytes: 81574
+Showing lines 1 to 800
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: // ═══════════════════════════════════════════════════════════════
+2: // EDU-CURATOR DASHBOARD — app.js
+3: // ═══════════════════════════════════════════════════════════════
+4: 
+5: // ═══════════════════════════════════════════════════════════════
+6: // 1. INITIALIZATION
+7: // ═══════════════════════════════════════════════════════════════
+8: 
+9: let db;
+10: try {
+11:   db = window.supabase.createClient(
+12:     window.__SUPABASE_URL__,
+13:     window.__SUPABASE_KEY__
+14:   );
+15: } catch (e) {
+16:   console.error('Failed to initialize Supabase client:', e);
+17:   document.getElementById('main-content').innerHTML =
+18:     '<p style="color:#f87171;padding:40px;">Failed to connect to Supabase. Check browser console.</p>';
+19: }
+20: 
+21: const $  = (sel, ctx = document) => ctx.querySelector(sel);
+22: const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+23: 
+24: const mainContent  = $('#main-content');
+25: const sidebarNav   = $('#sidebar-nav');
+26: const indicator    = $('#sidebar-indicator');
+27: const toastBox     = $('#toast-container');
+28: 
+29: if (window
+<truncated 29066 bytes>
+.canonical_value);
+755:     const confidenceLabel = confidence == null ? 'N/A' : `${confidence.toFixed(1)}%`;
+756:     const sourceLabels = sources.length
+757:       ? sources.map(sourceId => esc(sourceTitle(sourceId))).join(', ')
+758:       : 'No source recorded';
+759: 
+760:     return `
+761:       <div class="review-signal-item review-signal-${esc(status)}">
+762:         <div class="review-signal-head">
+763:           <div>
+764:             <h3>${esc(humanizeFieldName(fieldName))}</h3>
+765:             <p>${esc(field.resolution_reason || 'No resolution reason recorded')}</p>
+766:           </div>
+767:           <div class="review-signal-badges">
+768:             ${statusPill(status)}
+769:             <span class="pill pill-accent">${esc(confidenceLabel)}</span>
+770:           </div>
+771:         </div>
+772:         <div class="review-signal-body">
+773:           <div>
+774:             <span class="review-signal-label">Canonical</span>
+775:             <p>${esc(canonical)}</p>
+776:           </div>
+777:           <div>
+778:             <span class="review-signal-label">Sources</span>
+779:             <p>${sourceLabels}</p>
+780:           </div>
+781:           ${alternatives.length ? `
+782:             <div class="review-signal-alternatives">
+783:               <span class="review-signal-label">Alternatives</span>
+784:               <ul>
+785:                 ${alternatives.map(alt => `
+786:                   <li>
+787:                     ${esc(formatKnowledgeValue(alt.value))}
+788:                     ${alt.source ? `<span>${esc(sourceTitle(alt.source))}</span>` : ''}
+789:                   </li>
+790:                 `).join('')}
+791:               </ul>
+792:             </div>
+793:           ` : ''}
+794:         </div>
+795:       </div>
+796:     `;
+797:   }).join('');
+798: 
+799:   return `
+800:     <hr class="section-divider" />
+The above content does NOT show the entire file contents. If you need to view any lines of the file which were not shown to complete your task, call this tool again to view those lines.

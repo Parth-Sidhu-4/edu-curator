@@ -1,0 +1,46 @@
+[
+  {
+    "id": "396896b5-9eea-423e-8678-fe97c7b695b2",
+    "topic_id": "f1dff306-c7cc-5370-a33b-d530c256b178",
+    "source_id": "a0cd5bf8-ab46-4d64-9e36-dfb580f17e35",
+    "chunk_id": "e9e0f40e-fcf7-4e35-8829-2a5fa613ae4e",
+    "error_type": "RuntimeError",
+    "error_detail": "Cerebras request failed: HTTP 429: {\"message\":\"Requests per minute limit exceeded - too many requests sent.\",\"type\":\"too_many_requests_error\",\"param\":\"quota\",\"code\":\"request_quota_exceeded\"}",
+    "retry_count": 0,
+    "resolved": false,
+    "created_at": "2026-06-01T11:19:38.566206Z"
+  },
+  {
+    "id": "d83cda71-f5e6-4cda-a487-014332ee8715",
+    "topic_id": "f1dff306-c7cc-5370-a33b-d530c256b178",
+    "source_id": "a4126bdc-9e75-4beb-82b4-e564a49d390e",
+    "chunk_id": "c7e0a6f2-7fa7-47bd-8d8b-c7373f250d02",
+    "error_type": "RuntimeError",
+    "error_detail": "Cerebras request failed: HTTP 429: {\"message\":\"Requests per minute limit exceeded - too many requests sent.\",\"type\":\"too_many_requests_error\",\"param\":\"quota\",\"code\":\"request_quota_exceeded\"}",
+    "retry_count": 0,
+    "resolved": false,
+    "created_at": "2026-06-01T11:19:38.909323Z"
+  },
+  {
+    "id": "73b1067f-5ee8-49f8-9563-f6d4ecbcec26",
+    "topic_id": "f1dff306-c7cc-5370-a33b-d530c256b178",
+    "source_id": "c3d5095e-39d5-4f43-b088-33fa84ffd518",
+    "chunk_id": "cbecde4a-474b-47cb-ba54-1ccb5604de18",
+    "error_type": "RuntimeError",
+    "error_detail": "Cerebras request failed: HTTP 429: {\"message\":\"Requests per minute limit exceeded - too many requests sent.\",\"type\":\"too_many_requests_error\",\"param\":\"quota\",\"code\":\"request_quota_exceeded\"}",
+    "retry_count": 0,
+    "resolved": false,
+    "created_at": "2026-06-01T11:19:39.275801Z"
+  },
+  {
+    "id": "a9326ad8-7af2-4c12-8c3a-262b6a109326",
+    "topic_id": "f1dff306-c7cc-5370-a33b-d530c256b178",
+    "source_id": "f98f6f7a-c879-4532-8493-bff59db0599c",
+    "chunk_id": "1b75c74e-ddac-468f-9188-197ededeb92f",
+    "error_type": "RuntimeError",
+    "error_detail": "Cerebras request failed: HTTP 429: {\"message\":\"Requests per minute limit exceeded - too many requests sent.\",\"type\":\"too_many_requests_error\",\"param\":\"quota\",\"code\":\"request_quota_exceeded\"}",
+    "retry_count": 0,
+    "resolved": false,
+    "created_at": "2026-06-01T11:19:39.590998Z"
+  }
+]

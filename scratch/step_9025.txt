@@ -1,0 +1,197 @@
+<USER_REQUEST>
+You are a Senior Site Reliability Engineer (SRE), Distributed Systems Architect, and Production Readiness Reviewer.
+
+Analyze this entire codebase with a focus exclusively on Reliability, Resilience, Fault Tolerance, and Failure Handling.
+
+Assume this application will be deployed to production and will face real-world failures including network outages, API downtime, malformed inputs, database failures, concurrent users, and unexpected system states.
+
+1. Error Handling Review
+
+Identify:
+
+Unhandled exceptions
+Missing try/catch blocks
+Missing promise rejection handling
+Silent failures
+Error swallowing
+Generic exception handlers that hide root causes
+Operations that can crash the application
+
+For every issue found:
+
+File location
+Failure scenario
+User impact
+Recommended fix
+2. External Dependency Failure Analysis
+
+Review all external services and dependencies.
+
+Examples:
+
+LLM APIs
+Supabase/PostgreSQL
+Redis
+File systems
+Third-party APIs
+Cloud services
+
+Determine:
+
+What happens if the service is unavailable?
+What happens if requests timeout?
+What happens if responses are malformed?
+What happens if rate limits are exceeded?
+
+Identify:
+
+Missing retries
+Missing exponential backoff
+Missing timeout handling
+Missing circuit breakers
+Missing fallback mechanisms
+3. Input Robustness
+
+Determine how the system behaves when receiving:
+
+Empty inputs
+Null values
+Invalid JSON
+Corrupted files
+Unexpected file formats
+Oversized uploads
+Invalid URLs
+Malformed API responses
+
+Identify every place where invalid input can crash workflows.
+
+4. Data Integrity & Consistency
+
+Review all write operations.
+
+Identify risks involving:
+
+Partial writes
+Interrupted transactions
+Duplicate records
+Race conditions
+Concurrent updates
+Lost updates
+Orphaned records
+Inconsistent database state
+
+For each issue:
+
+Explain how it can occur
+Describe impact
+Suggest mitigation
+5. Long-Running Jobs & Background Tasks
+
+Review all ingestion, processing, crawling, ETL, RAG, AI-generation, and batch workflows.
+
+Identify:
+
+Jobs that can get stuck
+Jobs that 
+<truncated 72 bytes>
+ssing progress tracking
+Missing cancellation support
+
+Determine whether a server restart causes data loss or workflow corruption.
+
+6. Resource Exhaustion Risks
+
+Identify situations that could cause:
+
+Memory exhaustion
+CPU spikes
+Disk exhaustion
+Database connection exhaustion
+Thread exhaustion
+Queue overload
+
+Evaluate:
+
+Large file uploads
+Large PDFs
+Huge CSVs
+Large LLM outputs
+Large crawls
+Massive ingestion jobs
+7. Network Failure Scenarios
+
+Simulate:
+
+Slow network
+Packet loss
+Database timeout
+API timeout
+DNS failure
+Connection resets
+
+Determine:
+
+Whether the system recovers
+Whether users receive useful errors
+Whether jobs can resume
+8. Startup & Recovery Analysis
+
+Evaluate:
+
+Application startup process
+Recovery after crash
+Recovery after server restart
+Recovery after database restart
+Recovery after interrupted jobs
+
+Determine:
+
+What state is lost
+What state is preserved
+Whether recovery is automatic
+9. Logging & Observability
+
+Review logging quality.
+
+Identify:
+
+Missing logs
+Missing error context
+Missing request IDs
+Missing audit trails
+Missing metrics
+Missing monitoring hooks
+
+Determine whether an engineer could diagnose production failures using existing logs.
+
+10. Reliability Scoring
+
+Generate:
+
+Reliability Findings Table
+ID	Issue	Severity	File	Impact
+Reliability Scores
+Error Handling Score (0-100)
+Fault Tolerance Score (0-100)
+Recovery Score (0-100)
+Observability Score (0-100)
+Data Integrity Score (0-100)
+Overall Reliability Score (0-100)
+Final Deliverables
+
+Produce:
+
+Executive Summary
+Reliability Findings Table
+Detailed Failure Analysis
+Single Points of Failure
+Top 10 Most Likely Production Failures
+Top 10 Most Severe Production Failures
+Recommended Reliability Improvements
+Production Readiness Assessment
+
+Be extremely critical. Assume the application will eventually experience every failure mode possible. Focus on how the system behaves when things go wrong, not when everything works correctly.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-06-03T22:12:37+05:30.
+</ADDITIONAL_METADATA>

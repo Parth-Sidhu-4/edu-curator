@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import threading
 from pathlib import Path
 from typing import Any, Generic, TypeVar
 
@@ -150,11 +151,26 @@ class SupabaseTable(Generic[T]):
         self.model = model
         self.supabase = supabase_client
 
-    def read(self, limit: int | None = None, offset: int | None = None, filters: dict[str, Any] | None = None) -> list[T]:
+    def read(
+        self,
+        limit: int | None = None,
+        offset: int | None = None,
+        filters: dict[str, Any] | None = None,
+        columns: str | None = None,
+    ) -> list[T]:
+        """Read rows from Supabase.
+
+        Args:
+            columns: Optional comma-separated column names for projection,
+                     e.g. ``"id,topic_id,status"`` instead of ``SELECT *``.
+                     Use this on tables with large JSONB fields when you only
+                     need a subset of columns to avoid multi-MB payloads.
+        """
         if not self.supabase:
             return []
-        # Support pagination to prevent memory crashes as rows grow
-        query = self.supabase.table(self.table_name).select("*")
+        # Use column projection when specified; avoids SELECT * on large JSONB tables
+        select_cols = columns if columns else "*"
+        query = self.supabase.table(self.table_name).select(select_cols)
         if filters:
             for col, val in filters.items():
                 query = query.eq(col, val)
@@ -180,7 +196,8 @@ class SupabaseTable(Generic[T]):
         self.supabase.table(self.table_name).delete().eq(field, str(value)).execute()
 
 
-_supabase_client_cache = {}
+_supabase_client_cache: dict[tuple, Any] = {}
+_supabase_client_lock = threading.Lock()
 
 
 def get_table(name: str, model: type[T], settings=None) -> JsonTable[T] | SupabaseTable[T]:
@@ -188,14 +205,22 @@ def get_table(name: str, model: type[T], settings=None) -> JsonTable[T] | Supaba
 
     If SUPABASE_URL and SUPABASE_KEY are in settings, returns a SupabaseTable.
     Otherwise, returns a JsonTable pointing to data/.../name.json.
+
+    The Supabase client is cached per (url, key) pair behind a threading.Lock
+    to prevent duplicate client creation under concurrent startup.
     """
     if settings and settings.supabase_url and settings.supabase_key:
         try:
             from supabase import create_client
 
             cache_key = (settings.supabase_url, settings.supabase_key)
+            # Double-checked locking: fast path avoids lock acquisition on every call
             if cache_key not in _supabase_client_cache:
-                _supabase_client_cache[cache_key] = create_client(settings.supabase_url, settings.supabase_key)
+                with _supabase_client_lock:
+                    if cache_key not in _supabase_client_cache:
+                        _supabase_client_cache[cache_key] = create_client(
+                            settings.supabase_url, settings.supabase_key
+                        )
             supabase = _supabase_client_cache[cache_key]
             db_name = "normalized_documents" if name == "documents" else name
             return SupabaseTable(db_name, model, supabase)

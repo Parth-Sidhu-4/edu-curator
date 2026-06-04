@@ -54,7 +54,7 @@ def cerebras_public_models() -> list[dict]:
     return data.get("data", [])
 
 
-def _log_trace(
+def _log_trace_work(
     settings: Settings,
     messages: list[dict[str, str]],
     result: ChatResult,
@@ -63,6 +63,8 @@ def _log_trace(
     topic_sn: int | None,
     model: str | None = None,
 ) -> None:
+    """Blocking inner implementation — always called from a background thread."""
+    # (same body as before — moved here so _log_trace never blocks the caller)
     import uuid
     from datetime import datetime
     from pathlib import Path
@@ -110,14 +112,37 @@ def _log_trace(
     try:
         from edu_curator.storage import get_table
         from edu_curator.schemas import LLMTrace
-        
+
         tbl = get_table("llm_traces", LLMTrace, settings)
         tbl.write([LLMTrace.model_validate(trace_record)])
     except Exception as exc:
-        # Silence exception, log warning
         logger.warning(
             f"Failed to write trace to llm_traces repository: {exc}"
         )
+
+
+def _log_trace(
+    settings: Settings,
+    messages: list[dict[str, str]],
+    result: ChatResult,
+    latency_ms: int,
+    stage: str,
+    topic_sn: int | None,
+    model: str | None = None,
+) -> None:
+    """Fire-and-forget wrapper: runs _log_trace_work in a daemon thread.
+
+    This ensures that DB/file I/O for tracing never adds latency to the
+    LLM call path — critical for throughput at scale.
+    """
+    import threading
+    t = threading.Thread(
+        target=_log_trace_work,
+        args=(settings, messages, result, latency_ms, stage, topic_sn, model),
+        daemon=True,
+        name="LogTraceWriter",
+    )
+    t.start()
 
 
 
@@ -361,7 +386,6 @@ def chat_json(
                 except Exception as cache_exc:
                     logger.warning(f"Failed to write to Redis: {cache_exc}")
 
-            time.sleep(4.0)
             return chat_result
         except HTTPError as exc:
             if settings.litellm_fallback_enabled:

@@ -483,8 +483,13 @@ def run_resolve(settings, sn: int) -> TopicKnowledge:
     return topic_knowledge
 
 
-def run_generate_content(settings, sn: int) -> tuple[TopicContent, dict]:
+def run_generate_content(settings, sn: int, precomputed_inputs_hash: Optional[str] = None) -> tuple[TopicContent, dict]:
     """Generate educational content for one topic from its canonical knowledge.
+
+    Args:
+        precomputed_inputs_hash: If provided by run_full_pipeline, avoids a
+            second redundant call to compute_topic_inputs_hash() at the end.
+            Falls back to computing it here when called standalone.
 
     Returns a tuple of (topic_content, eval_result).
     """
@@ -525,8 +530,10 @@ def run_generate_content(settings, sn: int) -> tuple[TopicContent, dict]:
         target_threshold=9.0,
     )
 
-    # Compute inputs hash to store in the content record
-    current_hash = compute_topic_inputs_hash(topic.id, settings)
+    # Use pre-computed hash if provided by run_full_pipeline (avoids a second
+    # full DB round-trip to fetch topics, sources, and prompts).
+    # Falls back to computing it here when run_generate_content is called standalone.
+    current_hash = precomputed_inputs_hash or compute_topic_inputs_hash(topic.id, settings)
     topic_content = topic_content.model_copy(update={"inputs_hash": current_hash})
 
     tc_table = get_table("topic_content", TopicContent, settings)
@@ -707,9 +714,9 @@ def run_full_pipeline(
     topic_knowledge = run_resolve(settings, sn=sn)
     echo_fn(f"OK: resolved '{topic.topic_name}' — confidence={topic_knowledge.confidence}.")
 
-    # 5. Generate content
+    # 5. Generate content — pass the pre-computed hash to avoid a second full DB fetch
     echo_fn("\n[5/6] Generating educational content ...")
-    topic_content, eval_result = run_generate_content(settings, sn=sn)
+    topic_content, eval_result = run_generate_content(settings, sn=sn, precomputed_inputs_hash=current_hash)
     echo_fn(
         f"OK: generated. review_status={topic_content.review_status}, "
         f"confidence={topic_content.confidence_score}."

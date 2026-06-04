@@ -19,6 +19,7 @@ httpx==0.28.1
 anyio==4.13.0
 huggingface-hub==1.5.0
 tokenizers==0.22.2
+json-repair==0.59.10
 
 # ── AI / ML (pulls in PyTorch — heavy but needed) ─
 sentence-transformers==5.5.1

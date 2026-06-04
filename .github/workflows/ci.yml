@@ -87,5 +87,5 @@ jobs:
 
       - name: Verify image has health check target
         run: |
-          docker run --rm --entrypoint python edu-curator:ci-test \
+          docker run --rm -e SUPABASE_ANON_KEY=fake-anon-key --entrypoint python edu-curator:ci-test \
             -c "import dashboard.serve; print('Server module imports OK')"

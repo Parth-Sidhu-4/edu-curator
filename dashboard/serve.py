@@ -1440,6 +1440,9 @@ async def api_upload(request: Request, filename: str, email: str = Depends(get_c
     save_path = (uploads_dir / safe_filename).resolve()
     
     # Path traversal validation
+    if ".." in filename or "/" in filename or "\\" in filename:
+        raise HTTPException(status_code=400, detail="Path traversal attempt detected")
+        
     if uploads_dir not in save_path.parents and uploads_dir != save_path:
         raise HTTPException(status_code=400, detail="Path traversal attempt detected")
         

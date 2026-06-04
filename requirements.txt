@@ -24,3 +24,8 @@ tokenizers==0.22.2
 sentence-transformers==5.5.1
 scikit-learn==1.7.1
 easyocr==1.7.2
+
+# ── Dev / Test (not shipped in the production Docker image) ────────────
+# Installed by CI and local devs. The Dockerfile skips these via a
+# separate pip install step that only targets the lines above this block.
+pytest==8.3.5

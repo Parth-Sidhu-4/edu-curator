@@ -12,12 +12,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 COPY requirements.txt .
 
+# Strip dev/test deps (everything from the Dev/Test comment onwards) before
+# installing — pytest must never land in the production image.
+RUN sed '/^# ── Dev/,$d' requirements.txt > requirements.prod.txt
+
 # Install CPU-only PyTorch FIRST to prevent the 4GB GPU version being pulled in
 RUN pip install --no-cache-dir \
     torch --index-url https://download.pytorch.org/whl/cpu
 
-# Install all other Python deps
-RUN pip install --no-cache-dir -r requirements.txt
+# Install all other Python prod deps (no pytest, no test tooling)
+RUN pip install --no-cache-dir -r requirements.prod.txt
 
 # =============================================================================
 # STAGE 2: Runner — lean production image (no compilers, no build cache)

@@ -1,0 +1,24 @@
+# railway.toml — Railway deployment configuration for Edu-Curator
+# Docs: https://docs.railway.app/reference/config-as-code
+
+[build]
+# Use the multi-stage Dockerfile (builder + runner stages)
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# Railway injects $PORT automatically. The app reads it via os.getenv("PORT").
+# Do NOT hardcode a port here — Railway assigns it dynamically.
+startCommand = "python dashboard/serve.py"
+
+# Health check: Railway pings /health before routing traffic to the container.
+# Must return HTTP 200 within timeoutSeconds or Railway rolls back the deploy.
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+
+# Restart policy: restart on crash, but not on intentional stops.
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
+
+# Number of replicas (1 = single instance, enough for MVP/internship use)
+numReplicas = 1

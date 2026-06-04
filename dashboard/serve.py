@@ -58,8 +58,15 @@ if not _anon_key:
     )
     sys.exit(1)
 SUPABASE_BROWSER_KEY = _anon_key
-PORT = int(os.getenv("DASHBOARD_PORT", "8502"))
-DASHBOARD_HOST = os.getenv("DASHBOARD_HOST", "127.0.0.1")
+# Railway injects $PORT dynamically — honour it first, fall back to DASHBOARD_PORT.
+# Locally, DASHBOARD_PORT (default 8502) is used as before.
+PORT = int(os.getenv("PORT") or os.getenv("DASHBOARD_PORT", "8502"))
+
+# On Railway (and any cloud host), the app must bind to 0.0.0.0 so the
+# platform's load-balancer can reach it. DASHBOARD_HOST overrides this for
+# local dev (defaults to 127.0.0.1 in .env.example).
+_is_cloud = bool(os.getenv("RAILWAY_ENVIRONMENT") or os.getenv("RENDER") or os.getenv("FLY_APP_NAME"))
+DASHBOARD_HOST = os.getenv("DASHBOARD_HOST", "0.0.0.0" if _is_cloud else "127.0.0.1")
 
 # ── Build Hash (cache-busting) ────────────────────────────────────────────────
 # Computed once at startup from the content of all JS and CSS files.

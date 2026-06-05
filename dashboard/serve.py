@@ -1114,7 +1114,7 @@ def manage_topic(body: dict, email: str = Depends(get_current_user_email)):
         topic_obj = next(iter(table.read(filters={"id": topic_id})), None)
         if not topic_obj:
             raise HTTPException(status_code=404, detail="Topic not found")
-        ALLOWED_TOPIC_FIELDS = {"chapter", "topic_name", "topic_type", "keywords", "difficulty_level", "status"}
+        ALLOWED_TOPIC_FIELDS = {"chapter", "topic_name", "topic_type", "keywords", "difficulty_level", "status", "custom_sections"}
         filtered_fields = {k: v for k, v in fields.items() if k in ALLOWED_TOPIC_FIELDS}
         if not filtered_fields:
             raise HTTPException(status_code=400, detail="No valid update fields provided")

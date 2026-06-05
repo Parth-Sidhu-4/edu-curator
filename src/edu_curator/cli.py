@@ -243,6 +243,27 @@ def load_syllabus() -> None:
 # Source management
 # ---------------------------------------------------------------------------
 
+def parse_sections_from_markdown(content: str) -> list[str]:
+    import re
+    lines = [line.strip() for line in content.splitlines() if line.strip()]
+    
+    # 1. Try to find headings (lines starting with #)
+    headings = [line.lstrip("#").strip() for line in lines if line.startswith("#")]
+    if headings:
+        return headings
+        
+    # 2. Try to find list items (lines starting with -, *, or number followed by dot)
+    list_items = []
+    for line in lines:
+        match = re.match(r"^([-*]|\d+\.)\s*(.*)$", line)
+        if match:
+            list_items.append(match.group(2).strip())
+    if list_items:
+        return list_items
+        
+    # 3. Fallback: treat each non-empty line as a section name
+    return lines
+
 
 @app.command()
 def add_source(
@@ -258,6 +279,8 @@ def add_source(
     ),
     owner: str = typer.Option("System Admin", "--owner", help="Source owner"),
     license_type: str = typer.Option("public documentation", "--license", help="License type"),
+    custom_sections: Optional[str] = typer.Option(None, "--custom-sections", help="Comma-separated custom sections"),
+    sections_file: Optional[Path] = typer.Option(None, "--sections-file", help="Markdown/text file to parse sections from"),
 ) -> None:
     """Register a new source for a topic and immediately ingest it.
 
@@ -279,6 +302,29 @@ def add_source(
 
     # Resolve topic
     topic = _get_topic_by_sn(sn)
+
+    # Parse custom sections if provided
+    custom_secs_list: list[str] | None = None
+    if custom_sections:
+        custom_secs_list = [s.strip() for s in custom_sections.split(",") if s.strip()]
+    elif sections_file:
+        sections_file = Path(sections_file)
+        if not sections_file.is_absolute():
+            sections_file = ROOT / sections_file
+        if not sections_file.exists():
+            raise typer.BadParameter(f"Sections file not found: {sections_file}")
+        content = sections_file.read_text(encoding="utf-8")
+        custom_secs_list = parse_sections_from_markdown(content)
+
+    if custom_secs_list is not None:
+        topic_table = get_table("syllabus_topics", SyllabusTopic, settings)
+        topics = topic_table.read()
+        for t in topics:
+            if t.id == topic.id:
+                t.custom_sections = custom_secs_list
+                break
+        topic_table.write(topics)
+        typer.echo(f"OK: set custom sections for topic '{topic.topic_name}': {custom_secs_list}")
 
     # Auto-detect source_type if not provided
     if source_type is None:

@@ -36,3 +36,22 @@ Thumbs.db
 
 # Local Dev Assets
 dev_assets/
+
+# LaTeX and compiled documents
+*.tex
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+chat_media_Architecture_Specification.html
+conceptual_er.png
+
+# Chat images and media
+chat_images/
+
+# Local Scratch folder
+scratch/
+

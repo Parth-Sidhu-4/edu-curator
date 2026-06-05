@@ -87,6 +87,23 @@ function renderSourceAdd(container) {
         </div>
       </div>
 
+      <div class="form-group">
+        <label class="form-label">Custom Sections (Optional)</label>
+        <input type="text" class="form-input" id="src-custom-sections" placeholder="e.g., Summary, Code Example, Limitations" />
+        <span class="text-xs text-muted" style="display:block;margin-top:4px;font-size:0.75rem;">Define a custom list of sections (comma-separated). Leave blank to use defaults.</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Parse Sections from Markdown (Optional)</label>
+        <div class="file-input-wrap" id="sections-file-dropzone" style="padding: 10px 14px; border: 1px dashed var(--border); border-radius: 6px; cursor: pointer; text-align: center; background: var(--bg-card);">
+          <div class="file-input-label" style="font-size: 0.85rem; display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--text-muted);">
+            <i class="ph-light ph-file-text" style="font-size:16px"></i>
+            <span>Choose a Markdown file to extract sections</span>
+          </div>
+          <input type="file" id="src-sections-file" style="display:none;" />
+        </div>
+      </div>
+
       <div class="form-actions">
         <button class="btn btn-primary" id="btn-add-source">Add Source</button>
       </div>
@@ -106,6 +123,32 @@ function renderSourceAdd(container) {
   const range = $('#src-trust');
   const rVal  = $('#src-trust-val');
   range.addEventListener('input', () => rVal.textContent = range.value);
+
+  // Parse sections from markdown file
+  const sectionsDropzone = $('#sections-file-dropzone');
+  const sectionsFileInput = $('#src-sections-file');
+  
+  if (sectionsDropzone && sectionsFileInput) {
+    sectionsDropzone.addEventListener('click', () => sectionsFileInput.click());
+    
+    sectionsFileInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          const content = evt.target.result;
+          const parsed = parseSectionsFromMarkdown(content);
+          if (parsed.length > 0) {
+            $('#src-custom-sections').value = parsed.join(', ');
+            toast(`Successfully parsed ${parsed.length} sections!`, 'success');
+          } else {
+            toast('Could not find any sections or list items in the file.', 'warning');
+          }
+        };
+        reader.readAsText(file);
+      }
+    });
+  }
 
   // Multi-select
   const selectedTopicIds = state.selectedSourceTopicIds;
@@ -201,6 +244,33 @@ function renderSourceAdd(container) {
     const btn = $('#btn-add-source');
     btn.disabled = true;
     btn.textContent = 'Registering...';
+
+    const customSectionsStr = $('#src-custom-sections')?.value?.trim() || '';
+    let customSectionsList = null;
+    if (customSectionsStr) {
+      customSectionsList = customSectionsStr.split(',').map(s => s.trim()).filter(Boolean);
+    }
+    
+    // If custom sections are defined, save them to the selected topic(s) first
+    if (customSectionsList) {
+      for (const tid of selectedTopicIds) {
+        try {
+          await apiFetch('/api/topic', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+              action: 'update',
+              id: tid,
+              fields: {
+                custom_sections: customSectionsList
+              }
+            })
+          });
+        } catch (err) {
+          console.error(`Failed to update custom sections for topic ${tid}:`, err);
+        }
+      }
+    }
 
     const ok = await insertSource(src);
     if (ok) {
@@ -558,4 +628,29 @@ function renderSourceList(container) {
 function truncate(str, n) {
   if (!str) return '';
   return str.length > n ? str.slice(0, n) + '...' : str;
+}
+
+function parseSectionsFromMarkdown(content) {
+  const lines = content.split('\n').map(line => line.trim()).filter(Boolean);
+  
+  // 1. Try to find headings (lines starting with #)
+  const headings = lines.filter(l => l.startsWith('#')).map(l => l.replace(/^#+\s*/, '').trim());
+  if (headings.length > 0) {
+    return headings;
+  }
+  
+  // 2. Try to find list items (lines starting with -, *, or number followed by dot)
+  const listItems = [];
+  lines.forEach(line => {
+    const match = line.match(/^([-*]|\d+\.)\s*(.*)$/);
+    if (match) {
+      listItems.push(match[2].trim());
+    }
+  });
+  if (listItems.length > 0) {
+    return listItems;
+  }
+  
+  // 3. Fallback: treat each non-empty line as a section name
+  return lines;
 }

@@ -51,6 +51,7 @@ class SyllabusTopic(StrictModel):
     keywords: list[str] = Field(default_factory=list)
     difficulty_level: str | None = None
     status: ProcessingStatus = ProcessingStatus.pending
+    custom_sections: list[str] | None = None
     created_at: datetime | None = None
     updated_at: datetime | None = None
 

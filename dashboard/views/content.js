@@ -488,7 +488,8 @@ function renderCurriculum(content, cur, topic, overrides = [], knowledgeRecord =
   const consistency = content.consistency_check_status != null ? (content.consistency_check_status ? 'Passed' : 'Failed') : '—';
   const reviewStatus = content.review_status || 'needs_review';
 
-  const sections = [
+  const hasSubtopics = cur && Array.isArray(cur.subtopics);
+  let sections = [
     { key: 'summary',             title: 'Summary',             rows: 3 },
     { key: 'definition',          title: 'Definition',          rows: 3 },
     { key: 'purpose',             title: 'Purpose',             rows: 3 },
@@ -498,6 +499,28 @@ function renderCurriculum(content, cur, topic, overrides = [], knowledgeRecord =
     { key: 'common_misconceptions', title: 'Common Misconceptions', rows: 4, array: true },
     { key: 'related_topics',      title: 'Related Topics',      rows: 3, array: true },
   ];
+
+  if (hasSubtopics && cur.subtopics.length > 0) {
+    const subkeys = Object.keys(cur.subtopics[0]).filter(k => k !== 'subtopic_name');
+    const isCustom = subkeys.some(k => !['summary', 'definition', 'purpose', 'key_properties', 'benefits', 'limitations', 'common_misconceptions', 'related_topics'].includes(k));
+    if (isCustom) {
+      sections = subkeys.map(k => {
+        const title = k.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        const isArray = Array.isArray(cur.subtopics[0][k]);
+        return { key: k, title: title, rows: isArray ? 4 : 3, array: isArray };
+      });
+    }
+  } else if (cur) {
+    const topkeys = Object.keys(cur).filter(k => !['topic_name', 'subtopics', 'faq'].includes(k));
+    const isCustom = topkeys.some(k => !['summary', 'definition', 'purpose', 'key_properties', 'benefits', 'limitations', 'common_misconceptions', 'related_topics'].includes(k));
+    if (isCustom) {
+      sections = topkeys.map(k => {
+        const title = k.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+        const isArray = Array.isArray(cur[k]);
+        return { key: k, title: title, rows: isArray ? 4 : 3, array: isArray };
+      });
+    }
+  }
 
   let triggers = {};
   if (knowledgeRecord && knowledgeRecord.knowledge) {
@@ -543,7 +566,7 @@ function renderCurriculum(content, cur, topic, overrides = [], knowledgeRecord =
     </div>
   `;
 
-  const hasSubtopics = cur && Array.isArray(cur.subtopics);
+  // hasSubtopics defined above
 
   if (hasSubtopics) {
     cur.subtopics.forEach((sub, subIdx) => {
@@ -1062,7 +1085,7 @@ function bindReviewButtons(contentId, version, cur, topic) {
   });
 
   const hasSubtopics = cur && Array.isArray(cur.subtopics);
-  const sections = [
+  let sections = [
     { key: 'summary',             array: false },
     { key: 'definition',          array: false },
     { key: 'purpose',             array: false },
@@ -1072,6 +1095,26 @@ function bindReviewButtons(contentId, version, cur, topic) {
     { key: 'common_misconceptions', array: true },
     { key: 'related_topics',      array: true },
   ];
+
+  if (hasSubtopics && cur.subtopics.length > 0) {
+    const subkeys = Object.keys(cur.subtopics[0]).filter(k => k !== 'subtopic_name');
+    const isCustom = subkeys.some(k => !['summary', 'definition', 'purpose', 'key_properties', 'benefits', 'limitations', 'common_misconceptions', 'related_topics'].includes(k));
+    if (isCustom) {
+      sections = subkeys.map(k => {
+        const isArray = Array.isArray(cur.subtopics[0][k]);
+        return { key: k, array: isArray };
+      });
+    }
+  } else if (cur) {
+    const topkeys = Object.keys(cur).filter(k => !['topic_name', 'subtopics', 'faq'].includes(k));
+    const isCustom = topkeys.some(k => !['summary', 'definition', 'purpose', 'key_properties', 'benefits', 'limitations', 'common_misconceptions', 'related_topics'].includes(k));
+    if (isCustom) {
+      sections = topkeys.map(k => {
+        const isArray = Array.isArray(cur[k]);
+        return { key: k, array: isArray };
+      });
+    }
+  }
 
   $$('.edit-curriculum-field').forEach(ta => {
     ta.addEventListener('input', () => {

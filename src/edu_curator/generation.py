@@ -146,6 +146,46 @@ def canonical_knowledge_summary(knowledge: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def clean_section_key(name: str) -> str:
+    import re
+    # Convert to lowercase
+    cleaned = name.lower().strip()
+    # Replace spaces, hyphens, slashes with underscores
+    cleaned = re.sub(r'[\s\-/]+', '_', cleaned)
+    # Remove any non-alphanumeric or non-underscore characters
+    cleaned = re.sub(r'[^a-z0-9_]', '', cleaned)
+    # Strip leading/trailing underscores
+    return cleaned.strip('_')
+
+
+def get_generation_schema(custom_sections: list[str] | None = None) -> dict[str, Any]:
+    if not custom_sections:
+        return GENERATION_OUTPUT_SCHEMA
+        
+    subtopic_schema = {
+        "subtopic_name": "string - the specific subtopic name"
+    }
+    for sec in custom_sections:
+        key = clean_section_key(sec)
+        subtopic_schema[key] = (
+            f"string - A comprehensive, detailed plain-language explanation of this subtopic's {sec}. "
+            "Must run to at least 2-3 paragraphs (minimum 150 words total). Use standard LaTeX math delimiters "
+            "(single '$' for inline, double '$$' for blocks) to format any equations, formulas, mathematical models, "
+            "metrics, or technical notations. Explain all variables and equations in detail."
+        )
+        
+    return {
+        "topic_name": "string - the overall topic name being explained",
+        "subtopics": [subtopic_schema],
+        "faq": [
+            {
+                "question": "string - A key question a learner might ask about this topic as a whole. Must be grounded in the Canonical Knowledge Summary.",
+                "answer": "string - A concise, helpful, and pedagogically sound answer. Must run to at least 1-2 paragraphs (minimum 80 words total). Ground this strictly in facts from the Canonical Knowledge Summary. Use standard LaTeX math delimiters or Markdown backticks as appropriate."
+            }
+        ],
+    }
+
+
 # ---------------------------------------------------------------------------
 # Output schema for the generation model
 # ---------------------------------------------------------------------------
@@ -194,9 +234,11 @@ def generation_messages(
     knowledge_summary: str,
     sources_label: list[str],
     subtopics: list[str],
+    custom_sections: list[str] | None = None,
 ) -> list[dict[str, str]]:
     sources_str = ", ".join(sources_label) if sources_label else "trusted sources"
-    schema_str = json.dumps(GENERATION_OUTPUT_SCHEMA, indent=2)
+    schema = get_generation_schema(custom_sections)
+    schema_str = json.dumps(schema, indent=2)
     subtopics_bulleted = "\n".join(f"- {s}" for s in subtopics)
     return [
         {
@@ -253,11 +295,24 @@ REQUIRED_SUBTOPIC_ARRAY_FIELDS = {
 ALL_SUBTOPIC_FIELDS = REQUIRED_SUBTOPIC_STRING_FIELDS | REQUIRED_SUBTOPIC_ARRAY_FIELDS
 
 
-def validate_generated_content(payload: dict[str, Any], expected_subtopics: list[str] | None = None) -> list[str]:
+def validate_generated_content(
+    payload: dict[str, Any], 
+    expected_subtopics: list[str] | None = None,
+    custom_sections: list[str] | None = None
+) -> list[str]:
     """
     Return a list of validation issue descriptions.
     Empty list means the payload is acceptable.
     """
+    if custom_sections:
+        required_string_fields = {"subtopic_name"} | {clean_section_key(s) for s in custom_sections}
+        required_array_fields = set()
+        all_subtopic_fields = required_string_fields
+    else:
+        required_string_fields = REQUIRED_SUBTOPIC_STRING_FIELDS
+        required_array_fields = REQUIRED_SUBTOPIC_ARRAY_FIELDS
+        all_subtopic_fields = ALL_SUBTOPIC_FIELDS
+
     issues: list[str] = []
     if "topic_name" not in payload:
         issues.append("missing required field: topic_name")
@@ -273,17 +328,17 @@ def validate_generated_content(payload: dict[str, Any], expected_subtopics: list
             if not isinstance(sub, dict):
                 issues.append(f"subtopic at index {idx} must be a JSON object")
                 continue
-            for field in REQUIRED_SUBTOPIC_STRING_FIELDS:
+            for field in required_string_fields:
                 if field not in sub:
                     issues.append(f"subtopic {idx} missing required field: {field}")
                 elif sub[field] is not None and not isinstance(sub[field], str):
                     issues.append(f"subtopic {idx} field '{field}' must be a string or null")
-            for field in REQUIRED_SUBTOPIC_ARRAY_FIELDS:
+            for field in required_array_fields:
                 if field not in sub:
                     issues.append(f"subtopic {idx} missing required field: {field}")
                 elif not isinstance(sub[field], list):
                     issues.append(f"subtopic {idx} field '{field}' must be a list")
-            extra = set(sub.keys()) - ALL_SUBTOPIC_FIELDS
+            extra = set(sub.keys()) - all_subtopic_fields
             if extra:
                 issues.append(f"subtopic {idx} unexpected fields: {sorted(extra)}")
 
@@ -346,6 +401,7 @@ def generate_topic_content(
     topic_type: str,
     source_labels: list[str],
     topic_sn: int | None = None,
+    custom_sections: list[str] | None = None,
 ) -> tuple[TopicContent, ChatResult]:
     """
     Generate educational content from canonical topic knowledge.
@@ -367,6 +423,7 @@ def generate_topic_content(
         knowledge_summary=knowledge_summary,
         sources_label=source_labels,
         subtopics=subtopics,
+        custom_sections=custom_sections,
     )
 
     result = chat_json(
@@ -384,7 +441,7 @@ def generate_topic_content(
             f"Generation model returned invalid JSON: {exc}\nRaw output: {result.content[:500]}"
         ) from exc
 
-    issues = validate_generated_content(payload, expected_subtopics=subtopics)
+    issues = validate_generated_content(payload, expected_subtopics=subtopics, custom_sections=custom_sections)
     if issues:
         if result.cached:
             logger.warning("Cached generation result failed schema validation. Retrying with fresh LLM call...")
@@ -398,7 +455,7 @@ def generate_topic_content(
             )
             try:
                 payload = json.loads(result.content)
-                issues = validate_generated_content(payload, expected_subtopics=subtopics)
+                issues = validate_generated_content(payload, expected_subtopics=subtopics, custom_sections=custom_sections)
             except json.JSONDecodeError as exc:
                 raise RuntimeError(
                     f"Generation model returned invalid JSON on retry: {exc}\nRaw output: {result.content[:500]}"

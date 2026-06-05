@@ -273,3 +273,55 @@ def test_validate_generated_content_subtopics():
     issues_faq_invalid = validate_generated_content(payload_faq_invalid, expected_subtopics=expected)
     assert any("field 'faq' must be a list" in issue for issue in issues_faq_invalid)
 
+
+def test_validate_generated_content_custom_sections():
+    from edu_curator.generation import validate_generated_content
+
+    custom_sections = ["Summary", "Code Example", "Limitations"]
+    
+    payload_valid = {
+        "topic_name": "Test Topic",
+        "subtopics": [
+            {
+                "subtopic_name": "Pull Requests",
+                "summary": "Summary test",
+                "code_example": "Code example test",
+                "limitations": "Limitations test"
+            }
+        ]
+    }
+
+    # 1. Valid payload matching custom sections
+    issues = validate_generated_content(payload_valid, expected_subtopics=["Pull Requests"], custom_sections=custom_sections)
+    assert not issues
+
+    # 2. Missing custom section (code_example)
+    payload_missing = {
+        "topic_name": "Test Topic",
+        "subtopics": [
+            {
+                "subtopic_name": "Pull Requests",
+                "summary": "Summary test",
+                "limitations": "Limitations test"
+            }
+        ]
+    }
+    issues_missing = validate_generated_content(payload_missing, expected_subtopics=["Pull Requests"], custom_sections=custom_sections)
+    assert any("missing required field: code_example" in issue for issue in issues_missing)
+
+    # 3. Unexpected field present
+    payload_extra = {
+        "topic_name": "Test Topic",
+        "subtopics": [
+            {
+                "subtopic_name": "Pull Requests",
+                "summary": "Summary test",
+                "code_example": "Code example test",
+                "limitations": "Limitations test",
+                "purpose": "Purpose test"
+            }
+        ]
+    }
+    issues_extra = validate_generated_content(payload_extra, expected_subtopics=["Pull Requests"], custom_sections=custom_sections)
+    assert any("unexpected fields: ['purpose']" in issue for issue in issues_extra)
+

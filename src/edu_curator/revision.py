@@ -18,6 +18,7 @@ from edu_curator.generation import (
     GENERATION_OUTPUT_SCHEMA,
     canonical_knowledge_summary,
     validate_generated_content,
+    get_generation_schema,
 )
 from edu_curator.ids import new_id
 from edu_curator.llm import chat_json
@@ -38,9 +39,11 @@ def revision_messages(
     faithfulness_criticism: str,
     completeness_score: float,
     completeness_criticism: str,
+    custom_sections: list[str] | None = None,
 ) -> list[dict[str, str]]:
     """Build the message sequence instructing the LLM to revise the curriculum JSON."""
-    schema_str = json.dumps(GENERATION_OUTPUT_SCHEMA, indent=2)
+    schema = get_generation_schema(custom_sections)
+    schema_str = json.dumps(schema, indent=2)
     previous_content_str = json.dumps(previous_content, indent=2)
     subtopics = [s.strip() for s in topic_name.split(",") if s.strip()]
     subtopics_bulleted = "\n".join(f"- {s}" for s in subtopics)
@@ -112,6 +115,7 @@ def refine_curriculum(
 
     logger = logging.getLogger(__name__)
     logger.info(f"Starting self-correction loop for '{topic.topic_name}' (max iterations: {max_iterations})")
+    custom_sections = getattr(topic, "custom_sections", None)
 
     # --- Iteration 1: Initial Generation ---
     logger.info("Iteration 1: Generating initial curriculum...")
@@ -122,6 +126,7 @@ def refine_curriculum(
         topic_type=topic.topic_type,
         source_labels=source_labels,
         topic_sn=None,
+        custom_sections=custom_sections,
     )
     # Log initial token usage
     try:
@@ -170,6 +175,7 @@ def refine_curriculum(
             faithfulness_criticism=best_eval.get("faithfulness_reason", ""),
             completeness_score=best_eval.get("completeness_score", 0),
             completeness_criticism=best_eval.get("completeness_reason", ""),
+            custom_sections=custom_sections,
         )
 
         # Call generator LLM for revision
@@ -201,7 +207,7 @@ def refine_curriculum(
             break
 
         expected_subs = [s.strip() for s in topic.topic_name.split(",") if s.strip()]
-        issues = validate_generated_content(payload, expected_subtopics=expected_subs)
+        issues = validate_generated_content(payload, expected_subtopics=expected_subs, custom_sections=custom_sections)
         if issues:
             if result.cached:
                 logger.warning("Cached revision result failed schema validation. Retrying with fresh LLM call...")
@@ -215,7 +221,7 @@ def refine_curriculum(
                 )
                 try:
                     payload = json.loads(result.content)
-                    issues = validate_generated_content(payload, expected_subtopics=expected_subs)
+                    issues = validate_generated_content(payload, expected_subtopics=expected_subs, custom_sections=custom_sections)
                 except json.JSONDecodeError as exc:
                     logger.warning(f"LLM returned invalid JSON on fresh retry: {exc}. Reverting.")
                     break

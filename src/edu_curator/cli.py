@@ -588,7 +588,7 @@ def extract(
         "--parallel/--no-parallel",
         help="Extract chunks concurrently using thread pool",
     ),
-    use_batch_api: Optional[bool] = typer.Option(
+    use_batch_api: bool = typer.Option(
         None, "--use-batch-api/--no-batch-api", help="Use Cerebras Offline Batch API for extraction"
     ),
 ) -> None:
@@ -954,7 +954,7 @@ def run_topic(
     force: bool = typer.Option(
         False, "--force/--no-force", help="Force pipeline execution even if inputs hash matches"
     ),
-    use_batch_api: Optional[bool] = typer.Option(
+    use_batch_api: bool = typer.Option(
         None, "--use-batch-api/--no-batch-api", help="Use Cerebras Offline Batch API for extraction"
     ),
 ) -> None:
